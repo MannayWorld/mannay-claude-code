@@ -60,6 +60,23 @@ This includes:
 
 **The user does NOT need to say "brainstorm".** If it's a new feature, you explore design first.
 
+## 4. Code Simplifier AFTER Any Implementation
+
+**ANY code that was just written or modified MUST be simplified before commit.**
+
+This includes:
+- After TDD GREEN phase → code-simplifier
+- After bug fix → code-simplifier
+- After refactoring → code-simplifier
+- Before any commit → code-simplifier
+
+**The user does NOT need to say "simplify".** After implementation, you simplify automatically.
+
+**How to invoke:**
+```
+Task(subagent_type="code-simplifier", prompt="Simplify the code I just implemented while preserving functionality")
+```
+
 ---
 
 # MULTI-AGENT CHAINING (Use ALL Relevant Agents)
@@ -70,7 +87,7 @@ This includes:
 
 ### Building a Feature (Full Chain)
 ```
-brainstorming → task-analysis → [domain agents] → TDD → review
+brainstorming → task-analysis → [domain agents] → TDD → code-simplifier → review → git
 ```
 
 Example: "Add user authentication"
@@ -81,11 +98,13 @@ Example: "Add user authentication"
 5. **api-designer** - Define endpoints, contracts
 6. **typescript-pro** - Type definitions for auth state
 7. **TDD** - Write tests first, then implement
-8. **code-reviewer** - Review final implementation
+8. **code-simplifier** - Simplify code while preserving functionality (MANDATORY)
+9. **code-reviewer** - Review final implementation
+10. **git** - Commit with conventional message
 
 ### Building UI (Full Chain)
 ```
-brainstorming → frontend-design → frontend-architect → accessibility-specialist → TDD → review
+brainstorming → frontend-design → frontend-architect → accessibility-specialist → TDD → code-simplifier → review → git
 ```
 
 Example: "Build a settings page"
@@ -94,11 +113,13 @@ Example: "Build a settings page"
 3. **frontend-architect** - Component structure, state management
 4. **accessibility-specialist** - WCAG compliance, keyboard nav
 5. **TDD** - Write tests first, then implement
-6. **code-reviewer** - Review quality
+6. **code-simplifier** - Simplify code while preserving functionality (MANDATORY)
+7. **code-reviewer** - Review quality
+8. **git** - Commit with conventional message
 
 ### Building API (Full Chain)
 ```
-brainstorming → api-designer → backend-architect → security-engineer → TDD → review
+brainstorming → api-designer → backend-architect → security-engineer → TDD → code-simplifier → review → git
 ```
 
 Example: "Create payment API"
@@ -107,11 +128,13 @@ Example: "Create payment API"
 3. **backend-architect** - Database design, error handling
 4. **security-engineer** - PCI compliance, input validation
 5. **TDD** - Write tests first, then implement
-6. **code-reviewer** - Review final code
+6. **code-simplifier** - Simplify code while preserving functionality (MANDATORY)
+7. **code-reviewer** - Review final code
+8. **git** - Commit with conventional message
 
 ### Fixing a Bug (Full Chain)
 ```
-systematic-debugging → [relevant domain agents] → TDD → review
+systematic-debugging → [relevant domain agents] → TDD → code-simplifier → review → git
 ```
 
 Example: "Authentication is broken"
@@ -119,11 +142,13 @@ Example: "Authentication is broken"
 2. **security-engineer** - If auth-related, review for vulnerabilities
 3. **backend-architect** - If backend issue, review architecture
 4. **TDD** - Write regression test, then fix
-5. **code-reviewer** - Review fix
+5. **code-simplifier** - Simplify the fix (MANDATORY)
+6. **code-reviewer** - Review fix
+7. **git** - Commit with conventional message
 
 ### Performance Issue (Full Chain)
 ```
-systematic-debugging → performance-engineer → [domain agents] → TDD → review
+systematic-debugging → performance-engineer → [domain agents] → TDD → code-simplifier → review → git
 ```
 
 Example: "The page is slow"
@@ -132,7 +157,9 @@ Example: "The page is slow"
 3. **frontend-architect** - If UI issue, optimize components
 4. **backend-architect** - If API issue, optimize queries
 5. **TDD** - Write performance tests, then optimize
-6. **code-reviewer** - Review optimizations
+6. **code-simplifier** - Simplify optimizations (MANDATORY)
+7. **code-reviewer** - Review optimizations
+8. **git** - Commit with conventional message
 
 ---
 

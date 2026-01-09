@@ -64,6 +64,23 @@ Standard git workflows following conventional commits and best practices.
 
 ---
 
+## Pre-Commit Checklist (MANDATORY)
+
+Before ANY commit, ensure:
+
+1. **Tests pass**: `pnpm test` (or project equivalent)
+2. **Code simplified**: Run code-simplifier agent on changed files
+3. **No lint errors**: `pnpm lint` (if available)
+
+**Auto-simplify before commit:**
+```
+Task(subagent_type="code-simplifier", prompt="Simplify the staged changes while preserving functionality")
+```
+
+Only proceed to commit after simplification is complete and tests still pass.
+
+---
+
 ## Commits
 
 ### Basic Commit

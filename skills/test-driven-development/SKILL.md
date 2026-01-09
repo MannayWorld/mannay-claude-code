@@ -197,6 +197,20 @@ After green only:
 
 Keep tests green. Don't add behavior.
 
+**MANDATORY: Run code-simplifier agent**
+```
+Task(subagent_type="code-simplifier", prompt="Simplify the code I just implemented while preserving all functionality")
+```
+
+The code-simplifier agent (from Anthropic's official plugins) will:
+- Apply project standards from CLAUDE.md
+- Reduce unnecessary complexity
+- Improve naming and clarity
+- Replace nested ternaries with cleaner patterns
+- Never change what the code does, only how it does it
+
+**After simplification, verify tests still pass before proceeding.**
+
 ### Repeat
 
 Next failing test for next feature.
