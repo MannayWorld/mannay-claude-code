@@ -1,0 +1,33 @@
+# Mannay Claude Code Documentation
+title: Mannay Claude Code
+description: Professional Claude Code plugin with smart multi-agent orchestration
+
+# Build settings
+markdown: kramdown
+highlighter: rouge
+
+# Kramdown settings
+kramdown:
+  input: GFM
+  hard_wrap: false
+  syntax_highlighter: rouge
+  syntax_highlighter_opts:
+    block:
+      line_numbers: false
+
+# Exclude from build
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - node_modules
+  - vendor
+
+# Defaults - use our custom layout
+defaults:
+  - scope:
+      path: ""
+    values:
+      layout: default
+
+# Permalink style
+permalink: pretty

@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="{{ page.description | default: site.description }}">
+  <title>{{ page.title | default: site.title }} | {{ site.title }}</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="{{ '/assets/css/main.css' | relative_url }}">
+  <link rel="stylesheet" href="{{ '/assets/css/syntax.css' | relative_url }}">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>">
+</head>
+<body>
+  <!-- Mobile Header -->
+  <header class="mobile-header">
+    <button class="menu-toggle" aria-label="Toggle navigation">
+      <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+        <path d="M3 5h14M3 10h14M3 15h14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+      </svg>
+    </button>
+    <span class="mobile-title">{{ site.title }}</span>
+    <button class="theme-toggle" aria-label="Toggle theme">
+      <svg class="sun-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <circle cx="12" cy="12" r="5"></circle>
+        <line x1="12" y1="1" x2="12" y2="3"></line>
+        <line x1="12" y1="21" x2="12" y2="23"></line>
+        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+        <line x1="1" y1="12" x2="3" y2="12"></line>
+        <line x1="21" y1="12" x2="23" y2="12"></line>
+        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+      </svg>
+      <svg class="moon-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+      </svg>
+    </button>
+  </header>
+
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <div class="sidebar-header">
+      <a href="{{ '/' | relative_url }}" class="logo">
+        <span class="logo-icon">⚡</span>
+        <span class="logo-text">mannay</span>
+      </a>
+      <button class="theme-toggle desktop-only" aria-label="Toggle theme">
+        <svg class="sun-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="5"></circle>
+          <line x1="12" y1="1" x2="12" y2="3"></line>
+          <line x1="12" y1="21" x2="12" y2="23"></line>
+          <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+          <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+          <line x1="1" y1="12" x2="3" y2="12"></line>
+          <line x1="21" y1="12" x2="23" y2="12"></line>
+          <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+          <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+        </svg>
+        <svg class="moon-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+        </svg>
+      </button>
+    </div>
+
+    <nav class="nav">
+      <div class="nav-section">
+        <span class="nav-section-title">Getting Started</span>
+        <a href="{{ '/' | relative_url }}" class="nav-link {% if page.url == '/' or page.url == '/index.html' %}active{% endif %}">
+          Introduction
+        </a>
+        <a href="{{ '/getting-started' | relative_url }}" class="nav-link {% if page.url contains 'getting-started' %}active{% endif %}">
+          Getting Started
+        </a>
+        <a href="{{ '/quick-start' | relative_url }}" class="nav-link {% if page.url contains 'quick-start' %}active{% endif %}">
+          Quick Start
+        </a>
+      </div>
+
+      <div class="nav-section">
+        <span class="nav-section-title">Reference</span>
+        <a href="{{ '/skills' | relative_url }}" class="nav-link {% if page.url contains 'skills' %}active{% endif %}">
+          Skills
+        </a>
+        <a href="{{ '/agents' | relative_url }}" class="nav-link {% if page.url contains 'agents' %}active{% endif %}">
+          Agents
+        </a>
+        <a href="{{ '/commands' | relative_url }}" class="nav-link {% if page.url contains 'commands' %}active{% endif %}">
+          Commands
+        </a>
+      </div>
+
+      <div class="nav-section">
+        <span class="nav-section-title">Resources</span>
+        <a href="{{ '/cheatsheet' | relative_url }}" class="nav-link {% if page.url contains 'cheatsheet' %}active{% endif %}">
+          Cheatsheet
+        </a>
+        <a href="{{ '/troubleshooting' | relative_url }}" class="nav-link {% if page.url contains 'troubleshooting' %}active{% endif %}">
+          Troubleshooting
+        </a>
+        <a href="https://github.com/mannay/mannay-claude-code" class="nav-link external">
+          GitHub
+          <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M3.5 3h5.5v5.5M9 3L3 9"/>
+          </svg>
+        </a>
+      </div>
+    </nav>
+
+    <div class="sidebar-footer">
+      <span class="version">v1.3.0</span>
+    </div>
+  </aside>
+
+  <!-- Overlay for mobile -->
+  <div class="overlay"></div>
+
+  <!-- Main Content -->
+  <main class="main">
+    <article class="content">
+      {{ content }}
+    </article>
+
+    <footer class="footer">
+      <div class="footer-links">
+        <a href="https://github.com/mannay/mannay-claude-code">GitHub</a>
+        <span class="separator">·</span>
+        <a href="https://github.com/mannay/mannay-claude-code/issues">Issues</a>
+      </div>
+      <p class="footer-copy">Built with Claude Code</p>
+    </footer>
+  </main>
+
+  <script src="{{ '/assets/js/main.js' | relative_url }}"></script>
+</body>
+</html>

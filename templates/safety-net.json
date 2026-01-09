@@ -1,0 +1,55 @@
+{
+  "version": 1,
+  "enabled": true,
+  "logBlocked": true,
+  "logFile": ".safety-net.log",
+  "failMode": "closed",
+  "rules": [
+    {
+      "name": "block-npm-publish",
+      "pattern": "npm\\s+publish",
+      "command": "npm",
+      "subcommand": "publish",
+      "action": "block",
+      "reason": "Publishing to npm requires manual approval",
+      "severity": "high"
+    },
+    {
+      "name": "block-pip-upload",
+      "pattern": "twine\\s+upload",
+      "command": "twine",
+      "subcommand": "upload",
+      "action": "block",
+      "reason": "Publishing to PyPI requires manual approval",
+      "severity": "high"
+    }
+  ],
+  "allowlist": [
+    "rm -rf dist/",
+    "rm -rf build/",
+    "rm -rf .next/",
+    "rm -rf node_modules/",
+    "rm -rf __pycache__/",
+    "rm -rf .cache/",
+    "rm -rf coverage/",
+    "rm -rf .nyc_output/",
+    "rm -rf target/",
+    "rm -rf out/"
+  ],
+  "protectedPaths": [
+    "/etc",
+    "/usr",
+    "/var",
+    "/bin",
+    "/sbin",
+    "/lib",
+    "/opt",
+    "/System",
+    "/Applications",
+    "/Library",
+    "$HOME/.ssh",
+    "$HOME/.gnupg",
+    "$HOME/.config",
+    "$HOME/.local"
+  ]
+}

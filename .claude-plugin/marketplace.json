@@ -1,0 +1,35 @@
+{
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
+  "name": "mannay-claude-code",
+  "description": "Mannay's curated Claude Code setup for productive development with autonomous capabilities",
+  "owner": {
+    "name": "Mannay",
+    "email": "mannay.world@gmail.com"
+  },
+  "plugins": [
+    {
+      "name": "mannay-claude-code",
+      "description": "Complete Claude Code plugin with 19 commands, 15 AI agents, 13 workflows with smart auto-detection, Ralph Mode, and Safety Net protection",
+      "version": "1.3.0",
+      "author": {
+        "name": "Mannay",
+        "email": "mannay.world@gmail.com"
+      },
+      "source": "./",
+      "category": "productivity",
+      "homepage": "https://github.com/MannayWorld/mannay-claude-code",
+      "tags": [
+        "productivity",
+        "nextjs",
+        "react",
+        "typescript",
+        "supabase",
+        "development",
+        "autonomous",
+        "agents",
+        "ralph-mode",
+        "safety-net"
+      ]
+    }
+  ]
+}

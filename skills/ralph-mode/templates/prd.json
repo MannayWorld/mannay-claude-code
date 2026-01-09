@@ -1,0 +1,34 @@
+{
+  "title": "Feature Title",
+  "description": "Brief description of what this feature does and why it's needed",
+  "acceptance_criteria": [
+    "Criterion 1: Specific, measurable outcome",
+    "Criterion 2: Another specific outcome",
+    "Criterion 3: Final outcome to verify"
+  ],
+  "technical_requirements": {
+    "frontend": [
+      "Component 1 - purpose and behavior",
+      "Component 2 - purpose and behavior",
+      "State management requirements",
+      "API integration points"
+    ],
+    "backend": [
+      "Endpoint 1: Method and path",
+      "Endpoint 2: Method and path",
+      "Database schema changes",
+      "Validation rules"
+    ],
+    "testing": [
+      "Unit tests for core logic",
+      "Integration tests for API endpoints",
+      "E2E tests for critical user flows"
+    ]
+  },
+  "dependencies": [
+    "External dependency 1",
+    "Internal dependency 2"
+  ],
+  "estimated_complexity": "Simple | Medium | Complex",
+  "notes": "Any additional context or considerations"
+}

@@ -1,0 +1,63 @@
+# Ralph Progress Log
+
+**Project:** [Project Name from PRD]
+**Started:** [YYYY-MM-DD]
+**Branch:** [Branch from PRD]
+**PRD:** scripts/ralph/prd.json
+
+---
+
+## Codebase Patterns
+
+**CRITICAL:** Check these patterns FIRST before implementing any story.
+These are patterns discovered during execution - following them prevents repeating mistakes.
+
+(Patterns will be added here as discovered during execution)
+
+Examples:
+- **API validation**: Always use Zod schemas before database operations
+- **React refs**: Use useRef<NodeJS.Timeout | null>(null) for timer refs
+- **Error handling**: Return typed errors, never throw in server actions
+
+---
+
+## Key Files
+
+Important files and their purposes (populated during execution):
+
+(Will be documented as Ralph discovers important files)
+
+---
+
+## Session Log
+
+Story completion entries are APPENDED below after each story.
+**NEVER OVERWRITE** - always append new entries at the bottom.
+
+Entry format:
+```
+---
+
+## [TIMESTAMP] - [STORY_ID]: [Story Title]
+
+**Status:** COMPLETED
+**Commit:** [commit hash]
+
+**Implementation Summary:**
+- What was built
+- Key functionality added
+
+**Files Changed:**
+- path/to/file.ts (created/modified)
+
+**Learnings:**
+- Patterns discovered
+- Gotchas encountered
+
+**Agents Invoked:**
+- agent-name: What it helped with
+```
+
+---
+
+(Story entries will be appended below this line)

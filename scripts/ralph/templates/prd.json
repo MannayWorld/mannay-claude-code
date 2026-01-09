@@ -1,0 +1,67 @@
+{
+  "projectName": "Example Feature Name",
+  "branchName": "ralph/example-feature",
+  "description": "A clear description of what this feature accomplishes and why it's being built",
+  "created": "2026-01-07",
+  "userStories": [
+    {
+      "id": "US-001",
+      "title": "Example: Add login form component",
+      "description": "Create a login form with email and password fields that validates input on submit",
+      "acceptanceCriteria": [
+        "Email input field with type='email'",
+        "Password input field with type='password' and min 8 chars",
+        "Submit button that triggers validation",
+        "Shows inline error for invalid email format",
+        "Shows error for password < 8 characters",
+        "Form is accessible (WCAG 2.1 AA)",
+        "typecheck passes",
+        "tests pass with >80% coverage"
+      ],
+      "priority": 1,
+      "passes": false,
+      "notes": "Use existing Button and Input components from @/components/ui. Follow React Hook Form patterns already in codebase.",
+      "blocked": false,
+      "blockedReason": ""
+    },
+    {
+      "id": "US-002",
+      "title": "Example: Add login server action",
+      "description": "Create server action to handle login form submission, validate credentials, and create session",
+      "acceptanceCriteria": [
+        "Server action in app/auth/actions.ts (Next.js) or api/auth.ts (Vite/CRA)",
+        "Validates email format and password length server-side",
+        "Checks credentials against database",
+        "Returns typed success or error response",
+        "Rate limiting applied (5 attempts per 15min)",
+        "typecheck passes",
+        "unit tests for action logic",
+        "integration test for full flow"
+      ],
+      "priority": 2,
+      "passes": false,
+      "notes": "Follow existing server action patterns. Use bcrypt for password comparison. Return error codes, not raw error messages.",
+      "blocked": false,
+      "blockedReason": ""
+    },
+    {
+      "id": "US-003",
+      "title": "Example: Connect form to server action",
+      "description": "Wire up the login form to call the server action and handle loading/error states",
+      "acceptanceCriteria": [
+        "Form calls login server action on submit",
+        "Shows loading spinner during submission (disable form)",
+        "Displays error message from action response",
+        "Redirects to /dashboard on successful login",
+        "Clears form on success",
+        "typecheck passes",
+        "E2E test covering full user flow"
+      ],
+      "priority": 3,
+      "passes": false,
+      "notes": "Use useTransition for loading state (Next.js) or useState (Vite/CRA). Handle network errors gracefully.",
+      "blocked": false,
+      "blockedReason": ""
+    }
+  ]
+}

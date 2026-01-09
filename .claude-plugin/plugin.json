@@ -1,0 +1,11 @@
+{
+  "name": "mannay-claude-code",
+  "version": "1.3.0",
+  "description": "Professional Claude Code plugin with 19 commands, 15 AI agents, 13 skills with smart auto-detection, Ralph Mode, and Safety Net protection",
+  "author": {
+    "name": "Mannay"
+  },
+  "license": "MIT",
+  "homepage": "https://github.com/MannayWorld/mannay-claude-code",
+  "repository": "https://github.com/MannayWorld/mannay-claude-code"
+}
