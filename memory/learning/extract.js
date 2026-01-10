@@ -8,46 +8,51 @@ const STOP_WORDS = new Set([
   'have', 'has', 'had', 'do', 'does', 'did', 'will', 'would', 'could', 'should',
   'may', 'might', 'must', 'shall', 'can', 'need', 'dare', 'ought', 'used',
   'to', 'of', 'in', 'for', 'on', 'with', 'at', 'by', 'from', 'as', 'into',
-  'through', 'during', 'before', 'after', 'above', 'below', 'between',
+  'through', 'during', 'before', 'after', 'above', 'below', 'between', 'over',
   'and', 'or', 'but', 'if', 'then', 'else', 'when', 'where', 'why', 'how',
   'this', 'that', 'these', 'those', 'i', 'you', 'we', 'they', 'it', 'he', 'she',
   'my', 'your', 'our', 'their', 'its', 'his', 'her',
   'all', 'each', 'every', 'both', 'few', 'more', 'most', 'other', 'some', 'such',
   'no', 'nor', 'not', 'only', 'same', 'so', 'than', 'too', 'very',
-  'just', 'also', 'now', 'here', 'there'
+  'just', 'also', 'now', 'here', 'there', 'about', 'like', 'what'
 ]);
 
 const LEARNING_PATTERNS = {
   pattern: [
-    /use[ds]?\s+(.+?)\s+pattern/i,
-    /implement[ed]?\s+(.+?)\s+approach/i,
-    /follow[ed]?\s+(.+?)\s+convention/i,
-    /adopt[ed]?\s+(.+?)\s+strategy/i
+    /\bpattern\b/i,
+    /\bapproach\b/i,
+    /\bconvention\b/i,
+    /\bstrategy\b/i
   ],
   architecture: [
-    /structur[ed]?\s+(.+)/i,
-    /organiz[ed]?\s+(.+)/i,
-    /architect[ed]?\s+(.+)/i,
-    /design[ed]?\s+(.+)/i
+    /\bstructure[ds]?\b/i,
+    /\borganize[ds]?\b/i,
+    /\barchitect/i,
+    /\bmodule[s]?\b/i,
+    /\bmvc\b/i
   ],
   decision: [
-    /decid[ed]?\s+to\s+(.+)/i,
-    /chos[e]?\s+(.+)/i,
-    /select[ed]?\s+(.+)/i,
-    /pick[ed]?\s+(.+)/i
+    /\bdecide[ds]?\b/i,
+    /\bdecision\b/i,
+    /\bchos[e]?\b/i,
+    /\bselect[ed]?\b/i,
+    /\bpick[ed]?\b/i,
+    /\bover\b.*\bvs?\b/i
   ],
   fix: [
-    /fix[ed]?\s+(.+)/i,
-    /resolv[ed]?\s+(.+)/i,
-    /solv[ed]?\s+(.+)/i,
-    /repair[ed]?\s+(.+)/i
+    /\bfix[ed]?\b/i,
+    /\bresolve[ds]?\b/i,
+    /\bsolve[ds]?\b/i,
+    /\brepair[ed]?\b/i,
+    /\bleak\b/i,
+    /\brace\s+condition\b/i
   ],
   tip: [
-    /remember\s+to\s+(.+)/i,
-    /note:\s+(.+)/i,
-    /important:\s+(.+)/i,
-    /always\s+(.+)/i,
-    /never\s+(.+)/i
+    /\bremember\s+to\b/i,
+    /\bnote:\s*/i,
+    /\bimportant:\s*/i,
+    /\balways\b/i,
+    /\bnever\b/i
   ]
 };
 
