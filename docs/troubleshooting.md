@@ -170,11 +170,12 @@ Claude Code uses this version number to determine if an update is available. If 
 
 **Checklist for releases:**
 1. Update `.claude-plugin/plugin.json` version
-2. Update `CHANGELOG.md`
-3. Update `README.md` version badge
-4. Update `docs/_layouts/default.html` sidebar version
-5. Update `docs/index.md` version
-6. Commit and push to GitHub
+2. Update `.claude-plugin/marketplace.json` version
+3. Update `CHANGELOG.md`
+4. Update `README.md` version badge
+5. Update `docs/_layouts/default.html` sidebar version
+6. Update `docs/index.md` version
+7. Commit and push to GitHub
 
 ---
 

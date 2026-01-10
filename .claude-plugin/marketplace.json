@@ -9,8 +9,8 @@
   "plugins": [
     {
       "name": "mannay-claude-code",
-      "description": "Complete Claude Code plugin with 19 commands, 15 AI agents, 13 workflows with smart auto-detection, Ralph Mode, and Safety Net protection",
-      "version": "1.3.0",
+      "description": "Professional Claude Code plugin with 20+ commands, 15 AI agents, 13 skills, Ralph Mode, Memory System, and Codex GPT Reviews",
+      "version": "1.5.0",
       "author": {
         "name": "Mannay",
         "email": "mannay.world@gmail.com"
