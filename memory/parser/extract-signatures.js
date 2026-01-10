@@ -86,26 +86,33 @@ function extractSignatureLine(node, sourceCode) {
 function extractDefinitions(tree, sourceCode, langConfig) {
   const definitions = [];
   const root = tree.rootNode;
+  const visited = new Set();
 
   // Walk the tree to find definitions
   function walk(node) {
+    // Avoid processing the same node twice
+    if (visited.has(node.id)) return;
+    visited.add(node.id);
+
     const type = node.type;
 
-    // Functions
+    // Functions (skip anonymous arrow functions inside expressions)
     if (
       type === 'function_declaration' ||
       type === 'function_definition' ||
-      type === 'method_definition' ||
-      type === 'arrow_function'
+      type === 'method_definition'
     ) {
       const nameNode = node.childForFieldName('name');
       const name = nameNode ? sourceCode.slice(nameNode.startIndex, nameNode.endIndex) : '<anonymous>';
 
-      definitions.push({
-        type: 'function',
-        name,
-        ...extractSignatureLine(node, sourceCode)
-      });
+      // Skip anonymous functions
+      if (name !== '<anonymous>') {
+        definitions.push({
+          type: type === 'method_definition' ? 'method' : 'function',
+          name,
+          ...extractSignatureLine(node, sourceCode)
+        });
+      }
     }
 
     // Classes
@@ -118,13 +125,6 @@ function extractDefinitions(tree, sourceCode, langConfig) {
         name,
         ...extractSignatureLine(node, sourceCode)
       });
-
-      // Also extract method signatures within the class
-      for (const child of node.children) {
-        if (child.type === 'class_body' || child.type === 'block') {
-          walk(child);
-        }
-      }
     }
 
     // TypeScript interfaces and type aliases
