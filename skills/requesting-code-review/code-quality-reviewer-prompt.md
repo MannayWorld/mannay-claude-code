@@ -6,11 +6,14 @@ Use this template when dispatching a code quality reviewer subagent.
 
 **Only dispatch after spec compliance review passes.**
 
+**Model:** MUST use `mannay-claude-code:code-reviewer` agent type - this enforces Opus and includes the full 4-phase review workflow. Do NOT use `general-purpose` with `haiku` for code quality reviews.
+
 ```
-Task tool (code-reviewer):
+Task tool:
+  subagent_type: "mannay-claude-code:code-reviewer"  # Enforces Opus model
   description: "Review code quality for Task N"
   prompt: |
-    You are the Mannay code-reviewer agent. Review the code changes for quality.
+    Review the code changes for quality.
 
     ## What Was Implemented
 

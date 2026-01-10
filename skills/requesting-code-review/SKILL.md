@@ -82,11 +82,21 @@ digraph process {
 }
 ```
 
-## Prompt Templates
+## Prompt Templates & Model Selection
 
-- **Implementer**: Use Task tool with general-purpose agent
-- `./spec-reviewer-prompt.md` - Dispatch spec compliance reviewer subagent
-- `./code-quality-reviewer-prompt.md` - Dispatch code quality reviewer subagent
+| Subagent | Agent Type | Model | Why |
+|----------|------------|-------|-----|
+| **Implementer** | `general-purpose` | (default) | Complex implementation work |
+| **Spec Reviewer** | `general-purpose` | `haiku` | Simple checklist comparison |
+| **Code Quality Reviewer** | `mannay-claude-code:code-reviewer` | Opus (enforced) | Deep 4-phase analysis |
+| **Final Reviewer** | `mannay-claude-code:code-reviewer` | Opus (enforced) | Architectural review |
+
+**IMPORTANT:** Code quality reviews MUST use the `mannay-claude-code:code-reviewer` agent type, which enforces Opus. Do NOT use `general-purpose` with `model: haiku` for code quality - it lacks the depth needed.
+
+- **Implementer**: `Task(subagent_type="general-purpose", ...)`
+- **Spec Reviewer**: `Task(subagent_type="general-purpose", model="haiku", ...)` - see `./spec-reviewer-prompt.md`
+- **Code Quality Reviewer**: `Task(subagent_type="mannay-claude-code:code-reviewer", ...)` - see `./code-quality-reviewer-prompt.md`
+- **Final Reviewer**: `Task(subagent_type="mannay-claude-code:code-reviewer", ...)`
 
 ## Example Workflow
 
