@@ -108,20 +108,73 @@ Restart Claude Code and reinstall the plugin.
 If nothing else works, completely reset the plugin system:
 
 ```bash
-# Remove ALL mannay-claude-code traces
+# 1. Remove cache
 rm -rf ~/.claude/plugins/cache/mannay-claude-code
+
+# 2. Remove marketplace
 rm -rf ~/.claude/plugins/marketplaces/mannay-claude-code
+
+# 3. Remove installed plugins registry
 rm ~/.claude/plugins/installed_plugins.json
 
-# Edit settings.json to remove the plugin entry
-# Remove: "mannay-claude-code@mannay-claude-code": true
+# 4. Edit known_marketplaces.json - remove the entire "mannay-claude-code": {...} block
+nano ~/.claude/plugins/known_marketplaces.json
+
+# 5. Edit settings.json - remove the line:
+#    "mannay-claude-code@mannay-claude-code": true
+nano ~/.claude/settings.json
 ```
 
 Then:
-1. Quit Claude Code
+1. **Quit Claude Code completely** (Cmd+Q, not just close window)
 2. Reopen Claude Code
 3. Add marketplace: `/plugin marketplace add MannayWorld/mannay-claude-code`
-4. Install: `/plugin install mannay-claude-code@mannay-claude-code`
+4. Install: `/plugin install mannay-claude-code`
+
+## Updating the Plugin
+
+**Important:** Claude Code has bugs with plugin updates ([#14061](https://github.com/anthropics/claude-code/issues/14061), [#15672](https://github.com/anthropics/claude-code/issues/15672)). The "Update Now" button often doesn't work properly.
+
+**Reliable update method:**
+
+```bash
+# 1. Delete the cache
+rm -rf ~/.claude/plugins/cache/mannay-claude-code
+
+# 2. Pull latest in marketplace
+cd ~/.claude/plugins/marketplaces/mannay-claude-code
+git pull origin main
+
+# 3. Restart Claude Code
+```
+
+If that doesn't work, use the Nuclear Option above.
+
+---
+
+## For Plugin Developers
+
+### Version must be updated in plugin.json
+
+When releasing a new version, you **MUST** update the version in `.claude-plugin/plugin.json`:
+
+```json
+{
+  "name": "mannay-claude-code",
+  "version": "1.5.0",  // <-- UPDATE THIS!
+  ...
+}
+```
+
+Claude Code uses this version number to determine if an update is available. If you only update README/CHANGELOG but not plugin.json, users won't get the update.
+
+**Checklist for releases:**
+1. Update `.claude-plugin/plugin.json` version
+2. Update `CHANGELOG.md`
+3. Update `README.md` version badge
+4. Update `docs/_layouts/default.html` sidebar version
+5. Update `docs/index.md` version
+6. Commit and push to GitHub
 
 ---
 
