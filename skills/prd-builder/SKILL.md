@@ -123,7 +123,7 @@ Phase 6: Quality Validation (NEW - schema + atomicity checks)
 
 4. **Validate understanding** with user before proceeding
 
-**Output:** Requirements discovery document saved to `docs/plans/YYYY-MM-DD-<feature>-requirements.md`
+**Output:** Requirements discovery document saved to `planning/YYYY-MM-DD-<feature>-requirements.md`
 
 ---
 
@@ -163,7 +163,7 @@ Phase 6: Quality Validation (NEW - schema + atomicity checks)
 4. **User selects** preferred approach
 5. **Document decision** with rationale
 
-**Output:** Design document saved to `docs/plans/YYYY-MM-DD-<feature>-design.md`
+**Output:** Design document saved to `planning/YYYY-MM-DD-<feature>-design.md`
 
 ---
 
@@ -191,7 +191,7 @@ Phase 6: Quality Validation (NEW - schema + atomicity checks)
 
 4. **Refine based on agent feedback**
 
-**Output:** Technical spec saved to `docs/plans/YYYY-MM-DD-<feature>-spec.md`
+**Output:** Technical spec saved to `planning/YYYY-MM-DD-<feature>-spec.md`
 
 ---
 

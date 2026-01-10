@@ -93,7 +93,7 @@ digraph process {
 ```
 You: I'm using Requesting Code Review to execute this plan.
 
-[Read plan file once: docs/plans/feature-plan.md]
+[Read plan file once: planning/feature-plan.md]
 [Extract all 5 tasks with full text and context]
 [Create TodoWrite with all tasks]
 
