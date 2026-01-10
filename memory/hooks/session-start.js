@@ -7,6 +7,7 @@ import { join } from 'path';
 import { existsSync } from 'fs';
 import { fileURLToPath } from 'url';
 import {
+  initDatabase,
   getLatestHandoff,
   markHandoffResumed,
   searchLearnings,
@@ -38,13 +39,17 @@ export async function handleSessionStart(input) {
     const dbPath = join(memoryDir, 'memory.db');
     const statePath = join(memoryDir, 'session-state.json');
 
-    // Check if database exists
-    if (!existsSync(dbPath)) {
-      return { context: null, message: 'No memory database found' };
-    }
+    // Initialize database (creates if doesn't exist)
+    const isNewDb = !existsSync(dbPath);
+    initDatabase(dbPath);
 
-    // Initialize database connection
-    getDatabase(dbPath);
+    if (isNewDb) {
+      // New project - database just created, no previous data
+      return {
+        context: null,
+        message: 'Memory database initialized for this project'
+      };
+    }
 
     let context = '';
     let task = null;
