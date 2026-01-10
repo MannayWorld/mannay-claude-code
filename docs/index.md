@@ -18,6 +18,7 @@ A development plugin that makes Claude Code better at building software:
 - [Skills Reference](skills.md) - All workflow skills
 - [Agents Reference](agents.md) - All domain agents
 - [Commands Reference](commands.md) - All slash commands
+- [Memory System](memory-system.md) - Persistent session memory
 - [Cheatsheet](cheatsheet.md) - Quick reference card
 
 ## Key Features
@@ -54,6 +55,15 @@ Autonomous execution for when you want Claude to work independently:
 2. Start with `/ralph-start`
 3. Claude executes stories, commits after each one
 4. Come back to completed work
+
+### Memory System (v1.4.0)
+
+Persistent memory that works automatically:
+- **Session Continuity** - Resume after context compaction
+- **Token Optimization** - 60-80% savings on large files
+- **Cross-Session Learning** - Remembers patterns and decisions
+
+Check with `/memory-status` or see [Memory System](memory-system.md) for details.
 
 ## Installation
 

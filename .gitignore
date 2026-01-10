@@ -12,3 +12,9 @@
 scripts/ralph/prd.json
 scripts/ralph/progress.txt
 scripts/ralph/prompt.md
+
+# Dependencies
+node_modules/
+
+# Memory System - Runtime Data
+memory/.claude/

@@ -351,6 +351,44 @@ Stop Ralph execution loop.
 
 ---
 
+## Memory Commands
+
+### /memory-status
+
+Check memory system status and statistics.
+
+```bash
+/memory-status
+```
+
+**Shows:**
+- Database size
+- Saved handoffs
+- Cached signatures
+- Token savings
+- Learnings count
+- Current session state
+
+---
+
+### /memory-learnings
+
+View recent learnings accumulated across sessions.
+
+```bash
+/memory-learnings
+```
+
+**Shows:**
+- Recent learnings
+- Tags and categories
+- Recall counts
+- Total learnings
+
+See [Memory System](memory-system.md) for full documentation.
+
+---
+
 ## Command Quick Reference
 
 | Command | Purpose |
@@ -376,3 +414,5 @@ Stop Ralph execution loop.
 | `/ralph-start` | Start Ralph |
 | `/ralph-status` | Check status |
 | `/ralph-stop` | Stop Ralph |
+| `/memory-status` | Memory system stats |
+| `/memory-learnings` | View learnings |

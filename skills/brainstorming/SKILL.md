@@ -74,7 +74,7 @@ Do NOT just mention agents. Actually invoke them with the Task tool.
 ## After the Design
 
 **Documentation:**
-- Write the validated design to `docs/plans/YYYY-MM-DD-<topic>-design.md`
+- Write the validated design to `planning/YYYY-MM-DD-<topic>-design.md`
 - Commit the design document to git
 
 **Implementation (if continuing):**

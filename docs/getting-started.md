@@ -10,6 +10,7 @@ A **development plugin** that makes Claude Code better at building software. Thi
 - **Expert friends** - Domain specialists (agents)
 - **Power tools** - Quick scaffolding (commands)
 - **Autopilot** - Optional autonomous execution (Ralph Mode)
+- **Memory** - Persistent state across sessions (Memory System)
 
 ## The 3 Layers
 
@@ -130,6 +131,34 @@ For autonomous execution when you want Claude to work independently.
 3. /ralph-start         # Start autonomous loop
 4. Come back later      # Work is done with commits
 ```
+
+## Memory System
+
+Mannay includes automatic persistent memory that works in the background.
+
+### What It Does
+
+| Feature | Benefit |
+|---------|---------|
+| **Session Continuity** | Resume after context compaction |
+| **Token Optimization** | 60-80% savings on large files |
+| **Cross-Session Learning** | Remembers patterns across sessions |
+
+### How It Works
+
+1. **During work** - Tracks files modified and decisions made
+2. **Before compaction** - Saves state as a "handoff"
+3. **After compaction** - Restores state and continues
+4. **On session end** - Extracts learnings for future use
+
+### Commands
+
+```bash
+/memory-status      # Check system status
+/memory-learnings   # View accumulated learnings
+```
+
+See [Memory System](memory-system.md) for full documentation.
 
 ## Next Steps
 

@@ -1,0 +1,23 @@
+{
+  "name": "mannay-memory",
+  "version": "1.0.0",
+  "description": "Compound memory system for mannay-claude-code plugin",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "test": "node --test tests/",
+    "init-db": "node store/init.js"
+  },
+  "dependencies": {
+    "better-sqlite3": "^11.7.0"
+  },
+  "optionalDependencies": {
+    "tree-sitter": "^0.21.1",
+    "tree-sitter-typescript": "^0.21.2",
+    "tree-sitter-python": "^0.21.0",
+    "tree-sitter-javascript": "^0.21.4"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
