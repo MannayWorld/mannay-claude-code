@@ -2,7 +2,7 @@
 
 > Professional Claude Code plugin with smart multi-agent orchestration for modern web development.
 
-[![Version](https://img.shields.io/badge/version-1.4.0-blue.svg)](CHANGELOG.md)
+[![Version](https://img.shields.io/badge/version-1.5.0-blue.svg)](CHANGELOG.md)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 
 ## Features
@@ -11,6 +11,7 @@
 - **15 Agents** - Domain specialists for architecture, security, performance
 - **20+ Commands** - Quick scaffolding for APIs, components, pages
 - **Ralph Mode** - Autonomous execution from PRDs
+- **Codex Integration** - GPT code reviews via ChatGPT subscription
 - **Memory System** - Persistent state across sessions with token optimization
 - **Smart Orchestration** - Multi-agent chaining, intent detection
 
@@ -20,21 +21,19 @@
 claude /plugin install mannay/mannay-claude-code
 ```
 
-## What's New in v1.4.0
+## What's New in v1.5.0
 
-**Compound Memory System:**
-- **Session Continuity** - Automatic state preservation across context compactions
-- **Token Optimization** - 60-80% savings on large files via signature extraction
-- **Cross-Session Learning** - Accumulates patterns and decisions for future recall
+**Codex Integration - GPT Code Reviews:**
+- **Background Reviews** - Get a "second opinion" from GPT on your code
+- **No Extra Cost** - Uses your existing ChatGPT subscription via Codex CLI
+- **Specialized Flags** - `--security`, `--performance`, `--refactor`
 
 **New Commands:**
-- `/memory-status` - Check memory system statistics
-- `/memory-learnings` - View learnings accumulated across sessions
+- `/gpt-review` - Queue files for GPT code review
+- `/gpt-status` - Check review status and daily usage
+- `/gpt-results` - View review results
 
-**New Hooks:**
-- `pre-compact.sh` - Saves session state before compaction
-- `session-start.sh` - Restores state and recalls learnings
-- `session-end.sh` - Extracts learnings from session
+**Setup:** `npm install -g @openai/codex && codex auth`
 
 See [CHANGELOG.md](CHANGELOG.md) for full details.
 

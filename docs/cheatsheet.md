@@ -69,6 +69,13 @@
 /ralph-status
 ```
 
+**Codex (GPT Reviews):**
+```bash
+/gpt-review src/file.ts --security
+/gpt-status
+/gpt-results
+```
+
 **Memory:**
 ```bash
 /memory-status

@@ -56,6 +56,19 @@ Autonomous execution for when you want Claude to work independently:
 3. Claude executes stories, commits after each one
 4. Come back to completed work
 
+### Codex Integration (v1.5.0)
+
+Get a "second opinion" from GPT using your existing ChatGPT subscription:
+- **No Extra Cost** - Uses Codex CLI with ChatGPT auth
+- **Specialized Reviews** - Security, performance, refactoring
+- **Background Execution** - Non-blocking, results saved to files
+
+```bash
+/gpt-review src/auth.ts --security
+/gpt-status
+/gpt-results
+```
+
 ### Memory System (v1.4.0)
 
 Persistent memory that works automatically:
@@ -73,7 +86,7 @@ claude /plugin install mannay/mannay-claude-code
 
 ## Version
 
-Current: **v1.4.0** - See [CHANGELOG](https://github.com/mannay/mannay-claude-code/blob/main/CHANGELOG.md) for details.
+Current: **v1.5.0** - See [CHANGELOG](https://github.com/mannay/mannay-claude-code/blob/main/CHANGELOG.md) for details.
 
 ## Links
 

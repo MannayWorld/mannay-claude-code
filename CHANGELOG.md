@@ -5,6 +5,30 @@ All notable changes to mannay-claude-code plugin will be documented in this file
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.5.0] - 2026-01-10
+
+### Added
+
+**Codex Integration - GPT Code Reviews**
+- Background GPT code reviews using existing ChatGPT subscription (no extra API cost)
+- Specialized review types: `--security`, `--performance`, `--refactor`
+- Daily usage tracking and configurable limits
+
+**New Commands:**
+- `/gpt-review <file> [--flag]` - Queue file for GPT code review
+- `/gpt-status` - Check review status and daily usage
+- `/gpt-results` - View review results
+
+**New Files:**
+- `commands/codex/` - Codex command definitions
+- `scripts/codex/queue.sh` - Queue management script
+
+**Requirements:**
+- Codex CLI: `npm install -g @openai/codex`
+- Authentication: `codex auth` (Sign in with ChatGPT)
+
+---
+
 ## [1.4.0] - 2026-01-10
 
 ### Added

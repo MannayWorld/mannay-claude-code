@@ -351,6 +351,62 @@ Stop Ralph execution loop.
 
 ---
 
+## Codex Commands
+
+### /gpt-review
+
+Queue a file for GPT code review using your ChatGPT subscription via Codex CLI.
+
+```bash
+/gpt-review src/auth.ts --security
+/gpt-review src/api/payment.ts --performance
+/gpt-review src/utils.ts --refactor
+/gpt-review src/file.ts "Check for edge cases"
+```
+
+**Flags:**
+| Flag | Focus |
+|------|-------|
+| `--security` | Vulnerabilities, input validation, secrets |
+| `--performance` | Bottlenecks, memory leaks, optimization |
+| `--refactor` | DRY, naming, structure, clarity |
+
+**Requirements:**
+- Codex CLI installed: `npm install -g @openai/codex`
+- Authenticated: `codex auth` (Sign in with ChatGPT)
+
+---
+
+### /gpt-status
+
+Check Codex review status and daily usage.
+
+```bash
+/gpt-status
+```
+
+**Shows:**
+- Reviews completed today
+- Daily limit remaining
+- Recent review list
+
+---
+
+### /gpt-results
+
+View GPT code review results.
+
+```bash
+/gpt-results              # Show all recent results
+/gpt-results src/auth.ts  # Show specific file's review
+```
+
+**Shows:**
+- Summary of each review
+- Full results saved in `.claude/gpt-reviews/`
+
+---
+
 ## Memory Commands
 
 ### /memory-status
@@ -414,5 +470,8 @@ See [Memory System](memory-system.md) for full documentation.
 | `/ralph-start` | Start Ralph |
 | `/ralph-status` | Check status |
 | `/ralph-stop` | Stop Ralph |
+| `/gpt-review` | GPT code review via Codex |
+| `/gpt-status` | Codex review status |
+| `/gpt-results` | View GPT review results |
 | `/memory-status` | Memory system stats |
 | `/memory-learnings` | View learnings |
