@@ -73,7 +73,7 @@ claude /plugin install mannay/mannay-claude-code
 
 ## Version
 
-Current: **v1.3.0** - See [CHANGELOG](../CHANGELOG.md) for details.
+Current: **v1.4.0** - See [CHANGELOG](https://github.com/mannay/mannay-claude-code/blob/main/CHANGELOG.md) for details.
 
 ## Links
 

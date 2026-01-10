@@ -5,6 +5,41 @@ All notable changes to mannay-claude-code plugin will be documented in this file
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.4.0] - 2026-01-10
+
+### Added
+
+**Compound Memory System - Zero-Infrastructure Persistent Memory**
+- **Session Continuity** - Automatic state preservation across context compactions via PreCompact/SessionStart hooks
+- **Token Optimization** - Tree-sitter-powered signature extraction for large files (60-80% token savings)
+- **Semantic Learning** - Cross-session knowledge accumulation with FTS5 full-text search
+
+**New Hooks:**
+- `pre-compact.sh` - Saves session state before context compaction
+- `session-start.sh` - Restores state and recalls relevant learnings
+- `post-tool-track.sh` - Tracks file modifications and decisions
+- `pre-read.sh` - Intercepts file reads for signature caching
+- `session-end.sh` - Extracts learnings from session
+
+**New Commands:**
+- `/memory-status` - Show memory system statistics
+- `/memory-learnings` - Display recent cross-session learnings
+
+**New Files:**
+- `memory/` directory with SQLite store, Tree-sitter parsers, and learning extraction
+- `planning/` directory for internal PRDs and design documents
+- `docs/memory-system.md` - Comprehensive memory system documentation
+
+### Changed
+- Migrated internal planning documents from `docs/plans/` to `planning/`
+- Updated skills to save plans to `planning/` instead of `docs/plans/`
+- Documentation website now exclusively in `docs/` folder
+
+### Fixed
+- `docs/` folder now cleanly separated from internal planning materials
+
+---
+
 ## [1.3.0] - 2026-01-09
 
 ### Added
