@@ -4,30 +4,38 @@
 
 ## Installation
 
+**Step 1: Add the marketplace**
 ```bash
-claude /plugin install mannay/mannay-claude-code
+/plugin marketplace add MannayWorld/mannay-claude-code
+```
+
+**Step 2: Install the plugin**
+```bash
+/plugin install mannay-claude-code
 ```
 
 ## Verify Installation
 
 ```bash
-claude /plugin list
+/plugin list
 # Should show: mannay-claude-code
 ```
 
 ## Updating
 
-To get the latest features and fixes:
+Third-party plugins don't auto-update. To get the latest version:
 
 ```bash
-# Update all plugins
-claude /plugin update
-
-# Or reinstall specifically
-claude /plugin install mannay/mannay-claude-code
+# Update all plugins (pulls latest from GitHub)
+/plugin update
 ```
 
-Check current version in sidebar or run `/memory-status`.
+Or reinstall:
+```bash
+/plugin install mannay-claude-code
+```
+
+Check current version in the docs sidebar or website footer.
 
 ## What You Get
 

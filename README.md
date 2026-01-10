@@ -18,7 +18,14 @@
 ## Quick Install
 
 ```bash
-claude /plugin install mannay/mannay-claude-code
+# Add marketplace
+/plugin marketplace add MannayWorld/mannay-claude-code
+
+# Install plugin
+/plugin install mannay-claude-code
+
+# Update (when new versions available)
+/plugin update
 ```
 
 ## What's New in v1.5.0

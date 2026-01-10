@@ -81,7 +81,11 @@ Check with `/memory-status` or see [Memory System](memory-system.md) for details
 ## Installation
 
 ```bash
-claude /plugin install mannay/mannay-claude-code
+# Add marketplace
+/plugin marketplace add MannayWorld/mannay-claude-code
+
+# Install plugin
+/plugin install mannay-claude-code
 ```
 
 ## Version
