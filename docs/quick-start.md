@@ -15,6 +15,20 @@ claude /plugin list
 # Should show: mannay-claude-code
 ```
 
+## Updating
+
+To get the latest features and fixes:
+
+```bash
+# Update all plugins
+claude /plugin update
+
+# Or reinstall specifically
+claude /plugin install mannay/mannay-claude-code
+```
+
+Check current version in sidebar or run `/memory-status`.
+
 ## What You Get
 
 ### 13 Skills (Workflows)
@@ -56,6 +70,8 @@ claude /plugin list
 **Planning:** `/new-task`, `/feature-plan`, `/docs-generate`
 
 **Ralph:** `/ralph-init`, `/ralph-build`, `/ralph-start`, `/ralph-status`, `/ralph-stop`
+
+**Codex:** `/gpt-review`, `/gpt-status`, `/gpt-results`
 
 **Memory:** `/memory-status`, `/memory-learnings`
 
