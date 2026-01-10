@@ -152,33 +152,6 @@ If that doesn't work, use the Nuclear Option above.
 
 ---
 
-## For Plugin Developers
-
-### Version must be updated in plugin.json
-
-When releasing a new version, you **MUST** update the version in `.claude-plugin/plugin.json`:
-
-```json
-{
-  "name": "mannay-claude-code",
-  "version": "1.5.0",  // <-- UPDATE THIS!
-  ...
-}
-```
-
-Claude Code uses this version number to determine if an update is available. If you only update README/CHANGELOG but not plugin.json, users won't get the update.
-
-**Checklist for releases:**
-1. Update `.claude-plugin/plugin.json` version
-2. Update `.claude-plugin/marketplace.json` version
-3. Update `CHANGELOG.md`
-4. Update `README.md` version badge
-5. Update `docs/_layouts/default.html` sidebar version
-6. Update `docs/index.md` version
-7. Commit and push to GitHub
-
----
-
 ## Getting Help
 
 If you're still having issues:
