@@ -10,6 +10,7 @@
 | Bug/error | Systematic debugging |
 | New feature | Brainstorming |
 | Git operations | Git skill |
+| Context compaction | Memory handoff |
 
 ## Skills Quick Reference
 
@@ -66,6 +67,12 @@
 /ralph-build
 /ralph-start
 /ralph-status
+```
+
+**Memory:**
+```bash
+/memory-status
+/memory-learnings
 ```
 
 ## Conventional Commits
@@ -133,4 +140,18 @@ scripts/ralph/    # Ralph files
   progress.txt    # Execution log
   prompt.md       # Iteration prompt
   AGENTS.md       # Codebase guidance
+.claude/memory/   # Memory system
+  memory.db       # SQLite database
+  session-state.json  # Current session
 ```
+
+## Memory System
+
+**Automatic Features:**
+- Session continuity across compaction
+- Token optimization (60-80% savings)
+- Cross-session learning
+
+**Stored in:** `.claude/memory/memory.db`
+
+**Check status:** `/memory-status`

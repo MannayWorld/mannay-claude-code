@@ -57,6 +57,8 @@ claude /plugin list
 
 **Ralph:** `/ralph-init`, `/ralph-build`, `/ralph-start`, `/ralph-status`, `/ralph-stop`
 
+**Memory:** `/memory-status`, `/memory-learnings`
+
 ## Try It Out
 
 ### Example 1: Create a Component
