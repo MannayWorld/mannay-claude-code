@@ -2,7 +2,7 @@
 
 > Professional Claude Code plugin with smart multi-agent orchestration for modern web development.
 
-[![Version](https://img.shields.io/badge/version-1.3.0-blue.svg)](CHANGELOG.md)
+[![Version](https://img.shields.io/badge/version-1.4.0-blue.svg)](CHANGELOG.md)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 
 ## Features
@@ -11,6 +11,7 @@
 - **15 Agents** - Domain specialists for architecture, security, performance
 - **20+ Commands** - Quick scaffolding for APIs, components, pages
 - **Ralph Mode** - Autonomous execution from PRDs
+- **Memory System** - Persistent state across sessions with token optimization
 - **Smart Orchestration** - Multi-agent chaining, intent detection
 
 ## Quick Install
@@ -19,20 +20,21 @@
 claude /plugin install mannay/mannay-claude-code
 ```
 
-## What's New in v1.3.0
+## What's New in v1.4.0
 
-**Smart Orchestration:**
-- Mandatory behaviors auto-activate (TDD, debugging, brainstorming)
-- Multi-agent chaining - tasks use ALL relevant agents
-- Intent detection - understands what you want, not just keywords
+**Compound Memory System:**
+- **Session Continuity** - Automatic state preservation across context compactions
+- **Token Optimization** - 60-80% savings on large files via signature extraction
+- **Cross-Session Learning** - Accumulates patterns and decisions for future recall
 
-**New Skills:**
-- `git` - Comprehensive git with conventional commits
-- `frontend-design` - Distinctive UI avoiding AI aesthetics
-- `compound-engineering` - Plan → Work → Review → Compound loop
+**New Commands:**
+- `/memory-status` - Check memory system statistics
+- `/memory-learnings` - View learnings accumulated across sessions
 
-**Integration Sections:**
-- All skills now have `Called by` and `Pairs with` for clear orchestration
+**New Hooks:**
+- `pre-compact.sh` - Saves session state before compaction
+- `session-start.sh` - Restores state and recalls learnings
+- `session-end.sh` - Extracts learnings from session
 
 See [CHANGELOG.md](CHANGELOG.md) for full details.
 
@@ -45,7 +47,9 @@ See [CHANGELOG.md](CHANGELOG.md) for full details.
 | [Skills Reference](docs/skills.md) | All workflow skills |
 | [Agents Reference](docs/agents.md) | All domain agents |
 | [Commands Reference](docs/commands.md) | All slash commands |
+| [Memory System](docs/memory-system.md) | Persistent session memory |
 | [Cheatsheet](docs/cheatsheet.md) | Quick reference |
+| [Troubleshooting](docs/troubleshooting.md) | Common issues and fixes |
 
 ## Quick Examples
 
