@@ -6,6 +6,78 @@
 
 Skills are **systematic workflows** that auto-activate based on task type. They ensure best practices and quality standards.
 
+```
+┌─────────────────────────────────────────────────────────────────────┐
+│                          USER REQUEST                                │
+│                    "Add user authentication"                         │
+└─────────────────────────────────┬───────────────────────────────────┘
+                                  │
+                                  ▼
+┌─────────────────────────────────────────────────────────────────────┐
+│                         USING-MANNAY                                 │
+│                    (Meta-Orchestrator)                               │
+│                                                                      │
+│   1. Detect task type: NEW FEATURE                                  │
+│   2. Activate mandatory skill: brainstorming                        │
+│   3. Identify domains: auth, API, security                          │
+│   4. Queue agents: security-engineer, backend-architect, api-designer│
+└─────────────────────────────────┬───────────────────────────────────┘
+                                  │
+          ┌───────────────────────┼───────────────────────┐
+          │                       │                       │
+          ▼                       ▼                       ▼
+┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐
+│  BRAINSTORMING  │───►│  TASK-ANALYSIS  │───►│  WRITING-PLANS  │
+│  Design first   │    │  Break it down  │    │  Detailed steps │
+└─────────────────┘    └─────────────────┘    └─────────────────┘
+                                                       │
+                                                       ▼
+┌─────────────────────────────────────────────────────────────────────┐
+│                    IMPLEMENTATION PHASE                              │
+│                                                                      │
+│   ┌─────────────────────────────────────────────────────────────┐  │
+│   │                         TDD CYCLE                            │  │
+│   │    Write Test ──► Run (Fail) ──► Code ──► Run (Pass) ──► ♻️ │  │
+│   └─────────────────────────────────────────────────────────────┘  │
+│                              │                                      │
+│   ┌──────────────────────────┼──────────────────────────┐          │
+│   │                          │                          │          │
+│   ▼                          ▼                          ▼          │
+│ ┌────────────────┐  ┌────────────────┐  ┌────────────────┐        │
+│ │security-engineer│  │backend-architect│  │  api-designer  │        │
+│ │ Review auth    │  │ Schema design  │  │ Endpoint specs │        │
+│ └────────────────┘  └────────────────┘  └────────────────┘        │
+│                                                                      │
+└─────────────────────────────────────────────────────────────────────┘
+                                  │
+                                  ▼
+┌─────────────────────────────────────────────────────────────────────┐
+│                          GIT COMMIT                                  │
+│              feat(auth): add user authentication                     │
+└─────────────────────────────────────────────────────────────────────┘
+```
+
+---
+
+## Skill Categories
+
+```
+┌────────────────────────────────────────────────────────────────────┐
+│                          SKILLS                                     │
+├────────────────┬────────────────┬────────────────┬─────────────────┤
+│   MANDATORY    │   PLANNING     │   EXECUTION    │    QUALITY      │
+│  (Auto-On)     │                │                │                 │
+├────────────────┼────────────────┼────────────────┼─────────────────┤
+│ • TDD          │ • task-analysis│ • executing-   │ • code-review   │
+│ • debugging    │ • feature-     │   plans        │ • api-testing   │
+│ • brainstorming│   planning     │ • ralph-mode   │ • frontend-     │
+│ • git          │ • writing-plans│                │   design        │
+│                │ • prd-builder  │                │ • compound-eng  │
+└────────────────┴────────────────┴────────────────┴─────────────────┘
+```
+
+---
+
 ## Mandatory Skills (Auto-Activate)
 
 These activate **automatically** - no trigger needed:

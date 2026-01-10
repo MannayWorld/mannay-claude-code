@@ -11,11 +11,78 @@ The Compound Memory System gives Mannay Claude Code persistent memory across ses
 - **Token Savings** - 60-80% fewer tokens when reading large files
 - **Cross-Session Learning** - Accumulates knowledge from your development patterns
 
+---
+
+## Architecture
+
+```
+┌─────────────────────────────────────────────────────────────────┐
+│                    Claude Code Session                          │
+├─────────────────────────────────────────────────────────────────┤
+│                                                                 │
+│  ┌──────────────┐    ┌──────────────┐    ┌──────────────┐      │
+│  │   Session    │    │    Token     │    │   Semantic   │      │
+│  │  Continuity  │    │ Optimization │    │   Learning   │      │
+│  └──────┬───────┘    └──────┬───────┘    └──────┬───────┘      │
+│         │                   │                   │               │
+│         ▼                   ▼                   ▼               │
+│  ┌──────────────────────────────────────────────────────┐      │
+│  │                   SQLite Database                     │      │
+│  │  ┌──────────┐  ┌──────────┐  ┌──────────────────┐   │      │
+│  │  │ Handoffs │  │Signatures│  │ Learnings (FTS5) │   │      │
+│  │  └──────────┘  └──────────┘  └──────────────────┘   │      │
+│  └──────────────────────────────────────────────────────┘      │
+│                                                                 │
+└─────────────────────────────────────────────────────────────────┘
+```
+
+---
+
 ## How It Works
 
 ### Session Continuity
 
 When your context window fills up and Claude compacts, your session state is automatically preserved and restored.
+
+```
+┌─────────────────────┐
+│  Working on task... │
+│  Files modified     │
+│  Decisions made     │
+└─────────┬───────────┘
+          │
+          ▼
+┌─────────────────────┐
+│  Context fills up   │
+│  PreCompact Hook    │──────────┐
+└─────────┬───────────┘          │
+          │                      ▼
+          │            ┌─────────────────┐
+          │            │  Save Handoff   │
+          │            │  - Task state   │
+          │            │  - Files list   │
+          │            │  - Decisions    │
+          │            │  - Last action  │
+          │            └─────────────────┘
+          ▼
+┌─────────────────────┐
+│  Context compacts   │
+└─────────┬───────────┘
+          │
+          ▼
+┌─────────────────────┐          ┌─────────────────┐
+│  New session starts │◄─────────│  Load Handoff   │
+│  SessionStart Hook  │          │  Recall context │
+└─────────┬───────────┘          └─────────────────┘
+          │
+          ▼
+┌─────────────────────┐
+│  "Continuing:       │
+│   Add user auth     │
+│   Modified: 3 files │
+│   Last: validation" │
+└─────────────────────┘
+```
 
 **What's Preserved:**
 - Current task description
@@ -24,59 +91,146 @@ When your context window fills up and Claude compacts, your session state is aut
 - Todos and blockers
 - Last action performed
 
-**Example:**
-```
-Working on auth feature...
-  ↓
-Context compacts
-  ↓
-New session starts with:
-  "Continuing: Add user authentication
-   Modified: auth.ts, middleware.ts
-   Decision: Using JWT with refresh tokens
-   Last action: Created token validation"
-```
+---
 
 ### Token Optimization
 
 Large files are automatically summarized to their signatures (function names, class definitions, interfaces) before being loaded into context.
 
-**How it works:**
-- Files over 100 lines are analyzed
-- Tree-sitter extracts function/class/interface signatures
-- Signatures are cached for instant retrieval
-- Full file is still available when needed
+```
+┌────────────────────────────────────────────────────────────────┐
+│                        File Read Request                        │
+│                     (src/lib/auth.ts - 500 lines)              │
+└───────────────────────────────┬────────────────────────────────┘
+                                │
+                                ▼
+                    ┌───────────────────────┐
+                    │  File > 100 lines?    │
+                    └───────────┬───────────┘
+                                │
+                    ┌───────────┴───────────┐
+                    │ YES                   │ NO
+                    ▼                       ▼
+        ┌───────────────────┐    ┌───────────────────┐
+        │  Check Signature  │    │  Return Full File │
+        │      Cache        │    └───────────────────┘
+        └─────────┬─────────┘
+                  │
+        ┌─────────┴─────────┐
+        │ HIT              │ MISS
+        ▼                   ▼
+┌───────────────┐  ┌───────────────────────────┐
+│ Return Cached │  │   Tree-sitter Extract     │
+│   Signature   │  │   - Functions             │
+└───────────────┘  │   - Classes               │
+                   │   - Interfaces            │
+                   │   - Exports               │
+                   └─────────────┬─────────────┘
+                                 │
+                                 ▼
+                   ┌─────────────────────────┐
+                   │   Cache & Return        │
+                   │   Signature (50 lines)  │
+                   │   Token savings: 75%    │
+                   └─────────────────────────┘
+```
 
 **Supported Languages:**
-- TypeScript (.ts, .tsx)
-- JavaScript (.js, .jsx, .mjs, .cjs)
-- Python (.py)
 
-**Example:**
-```
-Reading: src/lib/auth.ts (500 lines)
-  ↓
-Extracted: Function signatures only (50 lines)
-  ↓
-Token savings: 75%
-```
+| Language | Extensions | What's Extracted |
+|----------|------------|------------------|
+| TypeScript | `.ts`, `.tsx` | Functions, classes, interfaces, types, exports |
+| JavaScript | `.js`, `.jsx`, `.mjs`, `.cjs` | Functions, classes, exports |
+| Python | `.py` | Functions, classes, methods |
+
+---
 
 ### Cross-Session Learning
 
 At the end of each session, meaningful learnings are extracted and stored for future recall.
 
-**Categories:**
-- **Patterns** - Recurring code patterns in your project
-- **Architecture** - Structural decisions and conventions
-- **Fixes** - Solutions to problems encountered
-- **Tips** - Project-specific best practices
+```
+┌─────────────────────────────────────────────────────────────────┐
+│                       Session Ends                              │
+└───────────────────────────────┬─────────────────────────────────┘
+                                │
+                                ▼
+                    ┌───────────────────────┐
+                    │   SessionEnd Hook     │
+                    │   Extract learnings   │
+                    └───────────┬───────────┘
+                                │
+                                ▼
+┌───────────────────────────────────────────────────────────────┐
+│                     Analyze Session                            │
+│  ┌──────────────┐  ┌──────────────┐  ┌──────────────┐        │
+│  │  Decisions   │  │   Blockers   │  │    Fixes     │        │
+│  │    Made      │  │  Encountered │  │    Applied   │        │
+│  └──────────────┘  └──────────────┘  └──────────────┘        │
+└───────────────────────────────┬───────────────────────────────┘
+                                │
+                                ▼
+                    ┌───────────────────────┐
+                    │    Categorize         │
+                    │  ┌─────────────────┐  │
+                    │  │ pattern         │  │
+                    │  │ architecture    │  │
+                    │  │ fix             │  │
+                    │  │ tip             │  │
+                    │  └─────────────────┘  │
+                    └───────────┬───────────┘
+                                │
+                                ▼
+                    ┌───────────────────────┐
+                    │   Deduplicate &       │
+                    │   Store with FTS5     │
+                    └───────────────────────┘
+```
 
-**Example learnings:**
+**Learning Categories:**
+
+| Category | Description | Example |
+|----------|-------------|---------|
+| **Pattern** | Recurring code patterns | "Uses Zod for validation with custom errors" |
+| **Architecture** | Structural decisions | "Database queries use connection pooling" |
+| **Fix** | Problem solutions | "Resolved by clearing the Next.js cache" |
+| **Tip** | Best practices | "Auth tokens expire after 15 minutes" |
+
+---
+
+## Hook Lifecycle
+
 ```
-"This project uses Zod for validation with custom error messages"
-"Database queries use connection pooling with max 10 connections"
-"Auth tokens expire after 15 minutes, refresh tokens after 7 days"
+SESSION START ─────────────────────────────────────────────► SESSION END
+      │                                                            │
+      ▼                                                            ▼
+┌──────────────┐                                        ┌──────────────┐
+│ session-start│                                        │ session-end  │
+│ - Load state │                                        │ - Extract    │
+│ - Recall     │                                        │   learnings  │
+│   learnings  │                                        │ - Store new  │
+└──────────────┘                                        └──────────────┘
+      │                                                            ▲
+      ▼                                                            │
+┌─────────────────────────────────────────────────────────────────┐
+│                         WORKING                                  │
+│                                                                  │
+│  ┌──────────────┐        ┌──────────────┐        ┌────────────┐│
+│  │  post-tool   │◄──────►│   pre-read   │        │ pre-compact││
+│  │  - Track     │        │  - Signature │        │ - Save     ││
+│  │    files     │        │    caching   │        │   handoff  ││
+│  │  - Track     │        │  - Token     │        │ - Preserve ││
+│  │    decisions │        │    savings   │        │   state    ││
+│  └──────────────┘        └──────────────┘        └────────────┘│
+│         ▲                       ▲                       ▲       │
+│         │                       │                       │       │
+│         └───────────────────────┼───────────────────────┘       │
+│                                 │                               │
+│                          During Session                         │
+└─────────────────────────────────────────────────────────────────┘
 ```
+
+---
 
 ## Commands
 
@@ -88,13 +242,20 @@ Check the memory system status and statistics.
 /memory-status
 ```
 
-**Shows:**
-- Database size
-- Number of saved handoffs
-- Cached file signatures
-- Token savings percentage
-- Recorded learnings
-- Current session state
+**Output example:**
+```
+=== Memory System Status ===
+Database: .claude/memory/memory.db (156 KB)
+
+Handoffs:      3 saved
+Signatures:    12 cached (avg 72% savings)
+Learnings:     8 stored
+
+Current Session:
+  Task: Implementing user authentication
+  Files: 4 modified
+  Decisions: 3 made
+```
 
 ---
 
@@ -106,11 +267,21 @@ View recent learnings accumulated across sessions.
 /memory-learnings
 ```
 
-**Shows:**
-- 10 most recent learnings
-- Tags and categories
-- Recall count (how often used)
-- Total learning count
+**Output example:**
+```
+=== Recent Learnings ===
+
+1. [pattern] This project uses Zod for validation with custom error messages
+   Recalls: 3 | Date: 2026-01-10
+
+2. [architecture] Auth tokens expire after 15 minutes, refresh after 7 days
+   Recalls: 2 | Date: 2026-01-10
+
+3. [fix] Database connection issue resolved by increasing pool timeout
+   Recalls: 1 | Date: 2026-01-09
+
+Total learnings: 8
+```
 
 **Search learnings:**
 ```
@@ -119,51 +290,63 @@ View recent learnings accumulated across sessions.
 
 ---
 
-## Automatic Behavior
-
-The memory system runs automatically through hooks:
-
-| Hook | When | What |
-|------|------|------|
-| `session-start` | New session | Restores previous state, recalls learnings |
-| `post-tool-track` | After actions | Tracks files and decisions |
-| `pre-compact` | Before compaction | Saves handoff with full state |
-| `pre-read` | Reading files | Caches signatures for large files |
-| `session-end` | Session ends | Extracts and stores learnings |
-
 ## File Locations
 
 ```
-.claude/memory/
-  memory.db           # SQLite database
-  session-state.json  # Current session state
+project/
+└── .claude/
+    └── memory/
+        ├── memory.db           # SQLite database (WAL mode)
+        └── session-state.json  # Current session state
 ```
+
+---
 
 ## Requirements
 
-- Node.js 18+
-- Dependencies installed automatically
+- **Node.js 18+** - For hook execution
+- **Dependencies** - Installed automatically on first use
+
+---
 
 ## Troubleshooting
 
 ### Memory not working?
 
-1. Check Node.js is installed: `node --version`
-2. Check dependencies: `cd memory && npm install`
-3. Verify database exists: `ls -la .claude/memory/`
+```bash
+# 1. Check Node.js version
+node --version  # Should be 18+
+
+# 2. Install dependencies
+cd .claude/plugins/mannay-claude-code/memory && npm install
+
+# 3. Verify database
+ls -la .claude/memory/
+```
 
 ### Signatures not caching?
 
-- File must be over 100 lines
-- Must be a supported language (.ts, .js, .py)
-- Tree-sitter dependencies must be installed
+| Issue | Solution |
+|-------|----------|
+| Small files | Only files >100 lines are cached |
+| Unsupported language | Only .ts, .js, .py supported |
+| Missing Tree-sitter | Run `npm install` in memory folder |
 
 ### Learnings not accumulating?
 
-- Session must have more than 3 actions
-- Decisions must be meaningful (not just commits)
-- Session must end normally (not terminated)
+| Issue | Solution |
+|-------|----------|
+| Short session | Need >3 actions to extract learnings |
+| No decisions | Simple file reads don't generate learnings |
+| Abnormal termination | Session must end normally |
+
+---
 
 ## Privacy
 
-All memory data is stored locally in your project's `.claude/memory/` directory. Nothing is sent externally. Add `.claude/memory/` to your `.gitignore` if you don't want to commit session data.
+All memory data is stored locally in your project's `.claude/memory/` directory. Nothing is sent externally.
+
+**To exclude from git:**
+```bash
+echo ".claude/memory/" >> .gitignore
+```
