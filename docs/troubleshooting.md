@@ -103,6 +103,64 @@ Restart Claude Code and reinstall the plugin.
 
 ---
 
+## Memory System Issues
+
+### Memory database not created
+
+**Symptoms:**
+- `/memory-status` says "No memory database found"
+- No `.claude/memory/` folder in your project
+- Memory features not working
+
+**Cause:**
+
+After clearing the plugin cache, the memory dependencies (`better-sqlite3`) need to be reinstalled. The plugin auto-installs them in the background, but it may not complete before your first session.
+
+**Solution:**
+
+1. Manually install memory dependencies:
+```bash
+cd ~/.claude/plugins/cache/mannay-claude-code/mannay-claude-code/*/memory
+npm install
+```
+
+2. Manually initialize the database for your project:
+```bash
+cd /path/to/your/project
+CLAUDE_PROJECT_ROOT="$(pwd)" node ~/.claude/plugins/cache/mannay-claude-code/mannay-claude-code/*/memory/hooks/session-start.js <<< '{}'
+```
+
+3. Verify it worked:
+```bash
+ls -la .claude/memory/memory.db
+```
+
+4. Restart Claude Code
+
+**Note:** After this fix, the memory system will work automatically for all future sessions in this project.
+
+---
+
+### Memory not persisting between sessions
+
+**Symptoms:**
+- Learnings not being recalled
+- Session state not restored after compaction
+
+**Cause:**
+
+The memory database is per-project, stored in `PROJECT_ROOT/.claude/memory/`. If you're opening Claude Code from different directories, each gets its own database.
+
+**Solution:**
+
+Always open Claude Code from your project root directory:
+```bash
+cd /path/to/your/project
+claude
+```
+
+---
+
 ## Nuclear Option
 
 If nothing else works, completely reset the plugin system:
