@@ -105,7 +105,9 @@ You: I'm using Requesting Code Review to execute this plan.
 
 [Read plan file once: planning/feature-plan.md]
 [Extract all 5 tasks with full text and context]
+[Check for existing progress files - resume if found]
 [Create TodoWrite with all tasks]
+[Initialize progress tracking if new]
 
 Task 1: Authentication middleware
 
@@ -129,7 +131,7 @@ Spec reviewer: ✅ Spec compliant - all requirements met, nothing extra
 [Get git SHAs, dispatch code quality reviewer]
 Code reviewer: Strengths: Good test coverage, secure. Issues: None. Approved.
 
-[Mark Task 1 complete]
+[Mark Task 1 complete - update progress files with commit reference]
 
 Task 2: Protected API routes
 
@@ -249,6 +251,37 @@ Done!
 **If subagent fails task:**
 - Dispatch fix subagent with specific instructions
 - Don't try to fix manually (context pollution)
+
+## Progress Tracking & Crash Recovery
+
+**Update progress after each task:**
+```javascript
+import { updateTaskStatus, appendLog } from 'memory/progress/index.js';
+import { markTaskComplete } from 'memory/progress/updater.js';
+
+// After task implementation and reviews pass
+const commitHash = getLatestCommitHash();
+markTaskComplete(planFile, taskId, commitHash);
+updateTaskStatus(planFile, taskId, 'completed', { commit: commitHash });
+appendLog(planFile, `Task ${taskId} completed (commit: ${commitHash})`);
+```
+
+**If session crashes:**
+1. Progress preserved in `<plan>-progress.json` and `<plan>-progress.md`
+2. Plan file has ✅ markers on completed tasks
+3. New session resumes from first incomplete task
+4. Git log shows all committed work
+
+**On session start, check for existing progress:**
+```javascript
+import { hasProgress, getProgress } from 'memory/progress/index.js';
+
+if (hasProgress(planFile)) {
+  const progress = getProgress(planFile);
+  const nextTask = progress.tasks.find(t => t.status !== 'completed');
+  console.log(`Resuming from Task ${nextTask.id}`);
+}
+```
 
 ## Integration
 

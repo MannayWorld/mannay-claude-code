@@ -149,9 +149,39 @@ Task 3: API Endpoint Design
 - DRY, YAGNI, TDD, frequent commits
 - Framework-appropriate patterns
 
+## Progress Tracking
+
+**After saving the plan, initialize progress tracking:**
+
+Progress files are created alongside the plan for resilient tracking across sessions:
+
+```
+planning/
+├── 2026-01-11-feature-name.md          # The plan
+├── 2026-01-11-feature-name-progress.json  # Machine-readable state
+└── 2026-01-11-feature-name-progress.md    # Human-readable dashboard
+```
+
+**Initialize progress with extracted tasks:**
+
+```javascript
+import { initProgress } from 'memory/progress/index.js';
+import { extractTasks } from 'memory/progress/updater.js';
+
+const planFile = 'planning/2026-01-11-feature-name.md';
+const tasks = extractTasks(planFile);
+initProgress(planFile, 'Feature Name', tasks);
+```
+
+**Progress files contain:**
+- **progress.json**: Task statuses, timestamps, commit references
+- **progress.md**: Visual dashboard with completed/in-progress/pending sections
+
+**Tell the user:** "Progress tracking initialized. If this session crashes, progress is preserved in `planning/<name>-progress.md`."
+
 ## Execution Handoff
 
-After saving the plan, offer execution choice:
+After saving the plan and initializing progress, offer execution choice:
 
 **"Plan complete and saved to `planning/<filename>.md`. Two execution options:**
 

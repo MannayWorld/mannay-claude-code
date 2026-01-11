@@ -7,7 +7,9 @@ import { join } from 'path';
 import { existsSync } from 'fs';
 import { fileURLToPath } from 'url';
 import { getCurrentSession } from '../state/index.js';
-import { deleteSignature, getDatabase } from '../store/index.js';
+import { deleteSignature, getDatabase, saveHandoff, initDatabase } from '../store/index.js';
+
+const PERIODIC_SAVE_INTERVAL = 5; // Save to DB every N actions
 
 export async function handlePostToolUse(input) {
   try {
@@ -88,6 +90,28 @@ export async function handlePostToolUse(input) {
         if (toolName) {
           session.setLastAction('Used ' + toolName);
         }
+    }
+
+    // Periodic save to DB every N actions
+    const actionCount = session.getActionCount();
+    if (actionCount > 0 && actionCount % PERIODIC_SAVE_INTERVAL === 0) {
+      try {
+        // Initialize DB if needed
+        initDatabase(dbPath);
+
+        const state = session.getState();
+        saveHandoff(dbPath, {
+          session_id: state.session_id,
+          trigger: 'periodic',
+          task: state.task,
+          status: state.status,
+          state: state,
+          summary: session.getSummary()
+        });
+      } catch (e) {
+        // Don't fail hook if periodic save fails
+        // DB might not be ready or other transient issue
+      }
     }
 
     return { status: 'ok' };

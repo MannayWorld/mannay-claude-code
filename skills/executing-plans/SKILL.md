@@ -18,24 +18,60 @@ Load plan, review critically, execute tasks in batches, report for review betwee
 ### Step 1: Load and Review Plan
 
 1. Read plan file
-2. Review critically - identify any questions or concerns about the plan
-3. Verify framework compatibility (Next.js, Vite, CRA patterns align)
-4. Check quantified standards are clear
-5. If concerns: Raise them with your human partner before starting
-6. If no concerns: Create TodoWrite and proceed
+2. **Check for existing progress**: Look for `<plan>-progress.json` alongside the plan
+   - If exists: Load progress and resume from last incomplete task
+   - If not: Initialize progress files using `initProgress()`
+3. Review critically - identify any questions or concerns about the plan
+4. Verify framework compatibility (Next.js, Vite, CRA patterns align)
+5. Check quantified standards are clear
+6. If concerns: Raise them with your human partner before starting
+7. If no concerns: Create TodoWrite and proceed
+
+**Progress Resume Logic:**
+```javascript
+import { getProgress, hasProgress, initProgress } from 'memory/progress/index.js';
+import { extractTasks } from 'memory/progress/updater.js';
+
+if (hasProgress(planFile)) {
+  const progress = getProgress(planFile);
+  console.log(`Resuming: ${progress.stats.completed}/${progress.stats.total} tasks done`);
+  // Skip completed tasks, start from first pending/in_progress
+} else {
+  const tasks = extractTasks(planFile);
+  initProgress(planFile, projectName, tasks);
+}
+```
 
 ### Step 2: Execute Batch
 
 **Default: First 3 tasks**
 
 For each task:
-1. Mark as in_progress
+1. Mark as in_progress (both TodoWrite and progress files)
 2. Follow each step exactly (plan has bite-sized steps)
 3. Use `pnpm` for all package operations
 4. Follow framework-specific patterns from plan
 5. Run verifications as specified
 6. Meet quantified standards (coverage, performance, accessibility)
-7. Mark as completed
+7. Commit the changes
+8. Mark as completed with commit reference
+
+**Update progress on each task:**
+```javascript
+import { updateTaskStatus, appendLog } from 'memory/progress/index.js';
+import { markTaskComplete, markTaskInProgress } from 'memory/progress/updater.js';
+
+// Starting task
+markTaskInProgress(planFile, taskId);
+updateTaskStatus(planFile, taskId, 'in_progress');
+appendLog(planFile, `Starting Task ${taskId}`);
+
+// After commit
+const commitHash = getLatestCommitHash(); // e.g., 'abc123f'
+markTaskComplete(planFile, taskId, commitHash);
+updateTaskStatus(planFile, taskId, 'completed', { commit: commitHash });
+appendLog(planFile, `Completed Task ${taskId} (commit: ${commitHash})`);
+```
 
 **Framework-Specific Execution:**
 - **Next.js**: Verify Server/Client Component boundaries, Edge Runtime compatibility
@@ -106,6 +142,19 @@ Task blocked: Unclear how to handle real-time updates
 Action: Invoke tech-stack-researcher agent to evaluate WebSockets vs SSE vs Supabase Realtime
 ```
 
+## Crash Recovery
+
+**If session crashes or context fills:**
+1. Progress is preserved in `<plan>-progress.json` and `<plan>-progress.md`
+2. Plan file has ✅ markers on completed tasks
+3. New session loads progress and resumes automatically
+4. Session log shows what was done and when
+
+**To verify state after crash:**
+- Read `<plan>-progress.md` for human-readable status
+- Check plan file for ✅ markers with commit references
+- Git log shows all committed work
+
 ## Remember
 
 - Review plan critically first
@@ -117,3 +166,4 @@ Action: Invoke tech-stack-researcher agent to evaluate WebSockets vs SSE vs Supa
 - Stop when blocked, don't guess
 - Meet quantified standards (coverage, performance, accessibility)
 - Follow framework-specific patterns
+- **Update progress files on every task completion**

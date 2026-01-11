@@ -301,15 +301,46 @@ Do NOT just mention agents. Actually invoke them with the Task tool during plann
 **Dependency Risks**:
 - [Risk and mitigation]
 
+### Progress Tracking
+
+**Initialize progress files when plan is created:**
+
+Progress files are created alongside the feature plan for crash-resilient tracking:
+
+```
+planning/
+├── YYYY-MM-DD-feature-name.md          # Feature plan
+├── YYYY-MM-DD-feature-name-progress.json  # Machine-readable state
+└── YYYY-MM-DD-feature-name-progress.md    # Human-readable dashboard
+```
+
+**Initialize with phases as tasks:**
+```javascript
+import { initProgress } from 'memory/progress/index.js';
+
+const tasks = [
+  { id: '1', title: 'Phase 1: Foundation' },
+  { id: '2', title: 'Phase 2: Backend' },
+  { id: '3', title: 'Phase 3: Frontend' },
+  { id: '4', title: 'Phase 4: Integration' },
+  { id: '5', title: 'Phase 5: Polish' },
+  { id: '6', title: 'Phase 6: Documentation & Deploy' }
+];
+initProgress(planFile, 'Feature Name', tasks);
+```
+
+**If session crashes:** Progress survives in files, execution resumes from last incomplete phase.
+
 ### Next Steps
 
 1. Review and approve this plan
-2. If design needs exploration, use mannay:brainstorming
-3. If ready to implement, use mannay:writing-plans for detailed step-by-step
-4. OR use mannay:requesting-code-review for subagent-driven execution
-5. Start with Phase 1 and test incrementally
-6. Use pnpm for all package operations
-7. Commit after each passing test
+2. **Progress tracking auto-initialized** - crash-safe from start
+3. If design needs exploration, use mannay:brainstorming
+4. If ready to implement, use mannay:writing-plans for detailed step-by-step
+5. OR use mannay:requesting-code-review for subagent-driven execution
+6. Start with Phase 1 and test incrementally
+7. Use pnpm for all package operations
+8. Commit after each passing test
 ```
 
 ## Integration

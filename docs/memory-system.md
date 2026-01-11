@@ -91,6 +91,72 @@ When your context window fills up and Claude compacts, your session state is aut
 - Todos and blockers
 - Last action performed
 
+**Periodic Saves:**
+
+In addition to saving on compaction, the system automatically saves to the database every 5 actions. This ensures that even if a crash occurs before context fills, your progress is preserved.
+
+```
+Action 1 → Track
+Action 2 → Track
+Action 3 → Track
+Action 4 → Track
+Action 5 → Track + Save to DB ✓
+Action 6 → Track
+...
+```
+
+---
+
+### Resilient Progress Tracking
+
+For plan-based work (feature implementation, task execution), the system maintains file-based progress tracking that survives any crash.
+
+```
+planning/
+├── 2026-01-11-feature.md              # The plan
+├── 2026-01-11-feature-progress.json   # Machine state
+└── 2026-01-11-feature-progress.md     # Human dashboard
+```
+
+**Two Safety Nets:**
+
+1. **File-based progress** - JSON + Markdown files survive anything
+2. **Periodic DB saves** - Snapshots every 5 actions
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│                    Task Execution                           │
+├─────────────────────────────────────────────────────────────┤
+│                                                             │
+│  ┌─────────────┐     ┌─────────────┐     ┌─────────────┐  │
+│  │ Task Start  │────►│   Working   │────►│Task Complete│  │
+│  └─────────────┘     └──────┬──────┘     └──────┬──────┘  │
+│         │                   │                   │          │
+│         ▼                   ▼                   ▼          │
+│  ┌─────────────┐     ┌─────────────┐     ┌─────────────┐  │
+│  │  Mark 🔄    │     │ Every 5 ops │     │  Mark ✅    │  │
+│  │ in progress │     │  save to DB │     │ + commit    │  │
+│  └─────────────┘     └─────────────┘     └─────────────┘  │
+│         │                   │                   │          │
+│         └───────────────────┼───────────────────┘          │
+│                             ▼                              │
+│                   ┌─────────────────┐                      │
+│                   │  progress.json  │                      │
+│                   │  progress.md    │                      │
+│                   │  plan.md (✅)   │                      │
+│                   └─────────────────┘                      │
+└─────────────────────────────────────────────────────────────┘
+```
+
+**Crash Recovery:**
+
+If session crashes or context fills:
+
+1. Read `<plan>-progress.md` to see completed tasks
+2. Check plan file for ✅ markers with commit references
+3. Git log shows all committed work
+4. New session resumes from first incomplete task
+
 ---
 
 ### Token Optimization
@@ -294,10 +360,25 @@ Total learnings: 8
 
 ```
 project/
-└── .claude/
-    └── memory/
-        ├── memory.db           # SQLite database (WAL mode)
-        └── session-state.json  # Current session state
+├── .claude/
+│   └── memory/
+│       ├── memory.db           # SQLite database (WAL mode)
+│       └── session-state.json  # Current session state
+│
+└── planning/                   # Progress tracking (per-plan)
+    ├── YYYY-MM-DD-feature.md              # Implementation plan
+    ├── YYYY-MM-DD-feature-progress.json   # Machine-readable state
+    └── YYYY-MM-DD-feature-progress.md     # Human-readable dashboard
+```
+
+**Plugin Location:**
+```
+~/.claude/plugins/cache/mannay-claude-code/mannay-claude-code/<version>/
+└── memory/
+    ├── hooks/           # Hook handlers
+    ├── state/           # Session state management
+    ├── store/           # SQLite operations
+    └── progress/        # Plan progress tracking
 ```
 
 ---

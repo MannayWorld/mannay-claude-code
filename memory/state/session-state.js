@@ -148,6 +148,10 @@ export class SessionState {
     return this.state.action_count > 0;
   }
 
+  getActionCount() {
+    return this.state.action_count || 0;
+  }
+
   clear() {
     this.state = { ...DEFAULT_STATE };
     this.save();

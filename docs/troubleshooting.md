@@ -161,6 +161,77 @@ claude
 
 ---
 
+## Progress Tracking Issues
+
+### Session crashed during plan execution
+
+**Symptoms:**
+- Session crashed or context filled mid-task
+- Unsure what tasks were completed
+- Need to resume from where left off
+
+**Solution:**
+
+Check the progress files alongside your plan:
+
+```bash
+# Look for progress files
+ls planning/*-progress.*
+
+# Read the human-readable dashboard
+cat planning/YYYY-MM-DD-feature-progress.md
+
+# Check the plan file for ✅ markers
+grep "✅" planning/YYYY-MM-DD-feature.md
+```
+
+When you start a new session, the executing-plans skill automatically:
+1. Detects existing progress files
+2. Resumes from the first incomplete task
+3. Shows you what was already completed
+
+---
+
+### Progress files not being created
+
+**Symptoms:**
+- No `-progress.json` or `-progress.md` files alongside plans
+- Old plans don't have progress tracking
+
+**Cause:**
+
+Progress tracking was added recently. Plans created before this feature won't have progress files.
+
+**Solution:**
+
+For new plans, progress files are created automatically by the writing-plans skill.
+
+For old plans, manually initialize:
+```javascript
+// In Claude, ask:
+"Initialize progress tracking for planning/YYYY-MM-DD-feature.md"
+```
+
+---
+
+### Progress out of sync with actual state
+
+**Symptoms:**
+- Progress shows task incomplete but code is committed
+- ✅ markers missing but work was done
+
+**Solution:**
+
+1. Check git for actual completed work:
+```bash
+git log --oneline -10
+```
+
+2. Manually update the progress.json or ask Claude to sync it
+3. The plan file ✅ markers can be added manually if needed
+
+---
+
 ## Nuclear Option
 
 If nothing else works, completely reset the plugin system:
