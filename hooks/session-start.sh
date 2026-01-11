@@ -17,7 +17,17 @@ using_mannay_content=$(cat "${PLUGIN_ROOT}/skills/using-mannay/SKILL.md" 2>/dev/
 
 # Try to get memory context
 memory_context=""
-if command -v node &> /dev/null && [ -d "${MEMORY_DIR}/node_modules" ]; then
+
+# Auto-install memory dependencies if missing
+if command -v node &> /dev/null && [ -d "${MEMORY_DIR}" ]; then
+    if [ ! -d "${MEMORY_DIR}/node_modules/better-sqlite3" ]; then
+        # Dependencies not installed - install them silently
+        (cd "${MEMORY_DIR}" && npm install --silent 2>/dev/null) &
+        # Don't wait - let it install in background, memory will work next session
+    fi
+fi
+
+if command -v node &> /dev/null && [ -d "${MEMORY_DIR}/node_modules/better-sqlite3" ]; then
     memory_result=$(echo "$INPUT" | node "${MEMORY_DIR}/hooks/session-start.js" 2>/dev/null || echo '{"context": null}')
     # Extract context from JSON result
     memory_context=$(echo "$memory_result" | node -e "
