@@ -21,3 +21,6 @@ memory/.claude/
 
 # Development Planning (internal docs)
 planning/
+
+# Runtime data (project-specific)
+.claude/

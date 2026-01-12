@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # SessionStart hook for Mannay plugin
-# Combines: skill loading + memory restoration
+# Minimal context injection + memory restoration
 
 set -euo pipefail
 
@@ -12,24 +12,18 @@ MEMORY_DIR="${PLUGIN_ROOT}/memory"
 # Read stdin for matcher info
 INPUT=$(cat 2>/dev/null || echo '{}')
 
-# Read using-mannay content
-using_mannay_content=$(cat "${PLUGIN_ROOT}/skills/using-mannay/SKILL.md" 2>/dev/null || echo "")
-
 # Try to get memory context
 memory_context=""
 
 # Auto-install memory dependencies if missing
 if command -v node &> /dev/null && [ -d "${MEMORY_DIR}" ]; then
     if [ ! -d "${MEMORY_DIR}/node_modules/better-sqlite3" ]; then
-        # Dependencies not installed - install them silently
         (cd "${MEMORY_DIR}" && npm install --silent 2>/dev/null) &
-        # Don't wait - let it install in background, memory will work next session
     fi
 fi
 
 if command -v node &> /dev/null && [ -d "${MEMORY_DIR}/node_modules/better-sqlite3" ]; then
     memory_result=$(echo "$INPUT" | node "${MEMORY_DIR}/hooks/session-start.js" 2>/dev/null || echo '{"context": null}')
-    # Extract context from JSON result
     memory_context=$(echo "$memory_result" | node -e "
         let d='';
         process.stdin.setEncoding('utf8');
@@ -45,7 +39,7 @@ if command -v node &> /dev/null && [ -d "${MEMORY_DIR}/node_modules/better-sqlit
     " 2>/dev/null || echo "")
 fi
 
-# Escape outputs for JSON using pure bash
+# Escape for JSON
 escape_for_json() {
     local input="$1"
     local output=""
@@ -64,23 +58,22 @@ escape_for_json() {
     printf '%s' "$output"
 }
 
-using_mannay_escaped=$(escape_for_json "$using_mannay_content")
-memory_escaped=$(escape_for_json "$memory_context")
-
-# Build combined context
-combined_context="<EXTREMELY_IMPORTANT>\\nYou have Mannay superpowers.\\n\\n**Below is the full content of your 'mannay:using-mannay' skill - your introduction to all available skills, agents, and commands. For all other tools, use the appropriate method (Skill tool, Task tool, or /command syntax):**\\n\\n${using_mannay_escaped}\\n</EXTREMELY_IMPORTANT>"
+# Minimal context - just remind about skills availability
+# Full skill docs are in SKILL.md files, loaded on-demand via Skill tool
+minimal_context="Mannay skills available. Key skills: git (commits), brainstorming (new features), systematic-debugging (bugs), test-driven-development (code). Use Skill tool when needed."
 
 # Add memory context if available
 if [ -n "$memory_context" ]; then
-    combined_context="${combined_context}\\n\\n${memory_escaped}"
+    memory_escaped=$(escape_for_json "$memory_context")
+    minimal_context="${minimal_context}\\n\\n${memory_escaped}"
 fi
 
-# Output context injection as JSON
+# Output minimal context
 cat <<EOF
 {
   "hookSpecificOutput": {
     "hookEventName": "SessionStart",
-    "additionalContext": "${combined_context}"
+    "additionalContext": "${minimal_context}"
   }
 }
 EOF
