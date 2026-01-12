@@ -281,6 +281,79 @@ If that doesn't work, use the Nuclear Option above.
 
 ---
 
+## Context Usage / Token Optimization
+
+### High context usage at session start
+
+**Symptoms:**
+- 15-20%+ context used before asking any questions
+- Status bar shows high token usage immediately
+- Sessions fill up quickly
+
+**Cause:**
+
+MCP servers load ALL tool definitions into the system prompt at startup. Each server adds hundreds to thousands of tokens regardless of whether you use them.
+
+**Solution 1: Enable Experimental Lazy Loading**
+
+Claude Code has an experimental mode that loads MCP tools on-demand:
+
+```bash
+# Add to ~/.zshrc or ~/.bashrc
+export ENABLE_EXPERIMENTAL_MCP_CLI=true
+```
+
+Restart your terminal and Claude Code. Verify with `/context` - MCP tools section should be minimal.
+
+This can reduce context from ~63% to ~11% at startup.
+
+**Solution 2: Disable Unused MCP Servers**
+
+Remove MCP servers you don't actively use from your configuration:
+- Global: `~/.claude/settings.json` or `~/.mcp.json`
+- Project: `.mcp.json` in project root
+
+**Solution 3: Use defer_loading (Advanced)**
+
+For API-level control, mark tools with `defer_loading: true`:
+
+```json
+{
+  "type": "mcp_toolset",
+  "mcp_server_name": "playwright",
+  "default_config": {"defer_loading": true}
+}
+```
+
+**Note:** This plugin intentionally does NOT bundle MCP servers to avoid duplication and context bloat. Configure MCP servers separately based on your needs.
+
+---
+
+### Recommended MCP Servers
+
+If you need MCP servers, add them to your global `~/.mcp.json`:
+
+```json
+{
+  "mcpServers": {
+    "context7": {
+      "command": "npx",
+      "args": ["-y", "@upstash/context7-mcp"],
+      "description": "Library documentation lookup"
+    },
+    "playwright": {
+      "command": "npx",
+      "args": ["@playwright/mcp@latest"],
+      "description": "Browser automation"
+    }
+  }
+}
+```
+
+Only add servers you actively use. Each server adds ~1-3K tokens to startup context.
+
+---
+
 ## Getting Help
 
 If you're still having issues:
