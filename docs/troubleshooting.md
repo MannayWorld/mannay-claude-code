@@ -294,24 +294,88 @@ If that doesn't work, use the Nuclear Option above.
 
 MCP servers load ALL tool definitions into the system prompt at startup. Each server adds hundreds to thousands of tokens regardless of whether you use them.
 
-**Solution 1: Enable Experimental Lazy Loading**
+---
 
-Claude Code has an experimental mode that loads MCP tools on-demand:
+### Solution 1: Enable Lazy Loading (Recommended)
+
+Claude Code has an experimental mode that loads MCP tools on-demand instead of at startup.
+
+**Setup (one-time):**
 
 ```bash
-# Add to ~/.zshrc or ~/.bashrc
-export ENABLE_EXPERIMENTAL_MCP_CLI=true
+# For Zsh (default on macOS)
+echo 'export ENABLE_EXPERIMENTAL_MCP_CLI=true' >> ~/.zshrc
+source ~/.zshrc
+
+# For Bash
+echo 'export ENABLE_EXPERIMENTAL_MCP_CLI=true' >> ~/.bashrc
+source ~/.bashrc
+
+# For Fish
+echo 'set -gx ENABLE_EXPERIMENTAL_MCP_CLI true' >> ~/.config/fish/config.fish
 ```
 
-Restart your terminal and Claude Code. Verify with `/context` - MCP tools section should be minimal.
+**Verify it's working:**
 
-This can reduce context from ~63% to ~11% at startup.
+1. Restart Claude Code completely (Cmd+Q, then reopen)
+2. Run `/context` command
+3. MCP tools section should be minimal or absent
+4. "Free space" should be significantly higher
 
-**Solution 2: Disable Unused MCP Servers**
+**Expected improvement:** Context usage drops from ~60% to ~10% at startup.
 
-Remove MCP servers you don't actively use from your configuration:
-- Global: `~/.claude/settings.json` or `~/.mcp.json`
-- Project: `.mcp.json` in project root
+---
+
+### Solution 2: Remove Duplicate MCP Servers
+
+MCP servers can be defined in multiple places, causing duplicates. Check all locations:
+
+**Step 1: Check for duplicates**
+
+```bash
+# Check all possible MCP config locations
+echo "=== Global configs ==="
+cat ~/.mcp.json 2>/dev/null || echo "~/.mcp.json: not found"
+cat ~/.claude/.mcp.json 2>/dev/null || echo "~/.claude/.mcp.json: not found"
+
+echo ""
+echo "=== Project config ==="
+cat .mcp.json 2>/dev/null || echo ".mcp.json: not found"
+
+echo ""
+echo "=== In settings.json ==="
+grep -A10 "mcpServers" ~/.claude/settings.json 2>/dev/null || echo "No mcpServers in settings.json"
+
+echo ""
+echo "=== From plugins ==="
+find ~/.claude/plugins -name ".mcp.json" 2>/dev/null
+```
+
+**Step 2: Remove duplicates**
+
+If the same server (e.g., `playwright`, `context7`) appears in multiple locations:
+
+1. Keep it in ONE place only (recommend: `~/.mcp.json` for global, or `.mcp.json` for project-specific)
+2. Delete from other locations
+3. Restart Claude Code
+
+**Common duplicate sources:**
+- Plugins bundling MCP servers (this plugin no longer does this)
+- Both global and project configs defining the same server
+- Old configs left over from previous setups
+
+---
+
+### Solution 3: Disable Unused MCP Servers
+
+Remove MCP servers you don't actively use:
+
+```bash
+# Edit your MCP config
+nano ~/.mcp.json  # or .mcp.json in project root
+```
+
+Remove or comment out servers you don't need. Each server adds ~1-3K tokens.
 
 **Solution 3: Use defer_loading (Advanced)**
 
