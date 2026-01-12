@@ -2,7 +2,7 @@
 
 > Professional Claude Code plugin with smart multi-agent orchestration for modern web development.
 
-[![Version](https://img.shields.io/badge/version-1.5.0-blue.svg)](CHANGELOG.md)
+[![Version](https://img.shields.io/badge/version-1.6.0-blue.svg)](CHANGELOG.md)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 
 ## Features
@@ -28,19 +28,14 @@
 /plugin update
 ```
 
-## What's New in v1.5.0
+## What's New in v1.6.0
 
-**Codex Integration - GPT Code Reviews:**
-- **Background Reviews** - Get a "second opinion" from GPT on your code
-- **No Extra Cost** - Uses your existing ChatGPT subscription via Codex CLI
-- **Specialized Flags** - `--security`, `--performance`, `--refactor`
+**90%+ Token Reduction:**
+- **Minimal Session Injection** - Hooks now inject ~1 line instead of ~500 lines at session start
+- **On-Demand Loading** - Full skill content loaded via Skill tool only when needed
+- **Conditional Prompts** - UserPromptSubmit hook only injects when keywords match
 
-**New Commands:**
-- `/gpt-review` - Queue files for GPT code review
-- `/gpt-status` - Check review status and daily usage
-- `/gpt-results` - View review results
-
-**Setup:** `npm install -g @openai/codex && codex auth`
+This dramatically reduces context usage from ~22% to ~2% at session start.
 
 See [CHANGELOG.md](CHANGELOG.md) for full details.
 

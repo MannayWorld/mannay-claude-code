@@ -90,7 +90,7 @@ Check with `/memory-status` or see [Memory System](memory-system.md) for details
 
 ## Version
 
-Current: **v1.5.0** - See [CHANGELOG](https://github.com/mannay/mannay-claude-code/blob/main/CHANGELOG.md) for details.
+Current: **v1.6.0** - See [CHANGELOG](https://github.com/mannay/mannay-claude-code/blob/main/CHANGELOG.md) for details.
 
 ## Links
 
