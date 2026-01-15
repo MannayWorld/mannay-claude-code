@@ -26,16 +26,12 @@
 Third-party plugins don't auto-update. To get the latest version:
 
 ```bash
-# Update all plugins (pulls latest from GitHub)
-/plugin update
+cd ~/.claude/plugins/marketplaces/mannay-claude-code && git pull
 ```
 
-Or reinstall:
-```bash
-/plugin install mannay-claude-code
-```
+Then restart Claude Code to load the new version.
 
-Check current version in the docs sidebar or website footer.
+Check current version in the docs sidebar or run `/plugin list`.
 
 ## What You Get
 

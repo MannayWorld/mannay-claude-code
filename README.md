@@ -25,7 +25,7 @@
 /plugin install mannay-claude-code
 
 # Update (when new versions available)
-/plugin update
+cd ~/.claude/plugins/marketplaces/mannay-claude-code && git pull
 ```
 
 ## What's New in v1.7.0
