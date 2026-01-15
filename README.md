@@ -2,12 +2,12 @@
 
 > Professional Claude Code plugin with smart multi-agent orchestration for modern web development.
 
-[![Version](https://img.shields.io/badge/version-1.6.0-blue.svg)](CHANGELOG.md)
+[![Version](https://img.shields.io/badge/version-1.7.0-blue.svg)](CHANGELOG.md)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 
 ## Features
 
-- **13 Skills** - Systematic workflows that auto-activate (TDD, debugging, brainstorming)
+- **15 Skills** - Systematic workflows that auto-activate (TDD, debugging, brainstorming, react-best-practices)
 - **15 Agents** - Domain specialists for architecture, security, performance
 - **20+ Commands** - Quick scaffolding for APIs, components, pages
 - **Ralph Mode** - Autonomous execution from PRDs
@@ -28,14 +28,21 @@
 /plugin update
 ```
 
-## What's New in v1.6.0
+## What's New in v1.7.0
 
-**90%+ Token Reduction:**
-- **Minimal Session Injection** - Hooks now inject ~1 line instead of ~500 lines at session start
-- **On-Demand Loading** - Full skill content loaded via Skill tool only when needed
-- **Conditional Prompts** - UserPromptSubmit hook only injects when keywords match
+**React & Design Excellence:**
+- `react-best-practices` - 45 performance rules across 8 priority categories (waterfalls, bundle size, re-renders)
+- `web-design-guidelines` - UI/UX compliance auditor with 11 rule categories
 
-This dramatically reduces context usage from ~22% to ~2% at session start.
+**Build System & CI/CD:**
+- TypeScript build system for react-best-practices (generates AGENTS.md from rules)
+- CI/CD workflow for automated skill validation
+- 81 extracted test cases for LLM evaluation
+
+**Skill Infrastructure:**
+- `metadata.json` for all 16 skills (version tracking)
+- `context: fork` for heavy skills (isolated context)
+- `allowed-tools` security restrictions
 
 See [CHANGELOG.md](CHANGELOG.md) for full details.
 

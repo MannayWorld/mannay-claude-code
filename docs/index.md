@@ -23,6 +23,12 @@ A development plugin that makes Claude Code better at building software:
 
 ## Key Features
 
+### React & Design Excellence (v1.7.0)
+
+New skills for high-quality React development:
+- `react-best-practices` - 45 performance rules prioritized by impact
+- `web-design-guidelines` - UI/UX compliance with WCAG standards
+
 ### Smart Orchestration (v1.3.0)
 
 **Mandatory Behaviors** - Core skills auto-activate:
@@ -90,7 +96,7 @@ Check with `/memory-status` or see [Memory System](memory-system.md) for details
 
 ## Version
 
-Current: **v1.6.0** - See [CHANGELOG](https://github.com/mannay/mannay-claude-code/blob/main/CHANGELOG.md) for details.
+Current: **v1.7.0** - See [CHANGELOG](https://github.com/mannay/mannay-claude-code/blob/main/CHANGELOG.md) for details.
 
 ## Links
 

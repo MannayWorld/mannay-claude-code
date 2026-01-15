@@ -5,6 +5,81 @@ All notable changes to mannay-claude-code plugin will be documented in this file
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.7.0] - 2026-01-15
+
+### Added
+
+**New Skills - React & Design Excellence**
+- `react-best-practices` - Performance optimization guide with 45 rules across 8 priority categories:
+  - Eliminating Waterfalls (CRITICAL) - async patterns, Promise.all, Suspense
+  - Bundle Size Optimization (CRITICAL) - dynamic imports, barrel file avoidance
+  - Server-Side Performance (HIGH) - React.cache(), LRU caching
+  - Client-Side Data Fetching (MEDIUM-HIGH) - SWR deduplication
+  - Re-render Optimization (MEDIUM) - memo, state patterns
+  - Rendering Performance (MEDIUM) - content-visibility, SVG optimization
+  - JavaScript Performance (LOW-MEDIUM) - loops, caching, data structures
+  - Advanced Patterns (LOW) - refs, stable callbacks
+- `web-design-guidelines` - UI/UX compliance auditor with 11 rule categories:
+  - Color contrast (WCAG AA), Typography (16px min), Touch targets (44px min)
+  - Visual hierarchy, Whitespace patterns, Responsive breakpoints
+  - Interactive feedback, Form design, Error handling, Loading states
+
+**TypeScript Build System**
+- `react-best-practices/src/` - Complete build infrastructure:
+  - `types.ts` - Type definitions for rules and sections
+  - `parser.ts` - Frontmatter parsing utilities
+  - `build.ts` - Generates AGENTS.md from individual rule files
+  - `validate.ts` - Rule validation against schema
+  - `extract-tests.ts` - Extracts test cases for LLM evaluation
+- Generated `test-cases.json` with 81 test cases (41 bad, 40 good patterns)
+
+**CI/CD Pipeline**
+- `.github/workflows/validate-skills.yml` - Automated skill validation:
+  - Validates SKILL.md structure and frontmatter on push/PR
+  - Conditionally builds react-best-practices
+  - JSON schema validation for metadata files
+
+**Skill Infrastructure**
+- Added `metadata.json` to all 16 skills with:
+  - Version tracking (1.0.0)
+  - Organization attribution (Mannay Engineering)
+  - Publication date
+  - Abstract description
+- Added `context: fork` to heavy skills for isolated context:
+  - react-best-practices, prd-builder, ralph-mode, using-mannay
+- Added `allowed-tools` security restrictions:
+  - git, test-driven-development, systematic-debugging
+  - api-testing, web-design-guidelines, react-best-practices
+- Added packaging scripts:
+  - `scripts/package-skills.sh` - Create distributable skill packages
+  - `scripts/install-skill.sh` - Install individual skills
+
+**Documentation**
+- `docs/background-agents.md` - Background agent patterns (Claude Code v2.0.60+)
+- `AGENTS.md` symlink to skills/react-best-practices/AGENTS.md
+- Progressive disclosure for prd-builder (823→245 lines with references/)
+
+### Changed
+
+**Skill Refactoring**
+- Restructured `web-design-guidelines` from single file to folder/SKILL.md pattern
+- Refactored `prd-builder` with progressive disclosure:
+  - Main SKILL.md reduced to 245 lines
+  - 7 reference files in `references/` directory
+- Added standard sections to 5 skills (Prerequisites, When to Use table, etc.)
+
+**Agent Updates**
+- `frontend-architect` - Now references web-design-guidelines and react-best-practices
+- `accessibility-specialist` - Now references web-design-guidelines
+- `code-reviewer` - Now references react-best-practices for React projects
+- `performance-engineer` - Now references react-best-practices performance rules
+- `refactoring-expert` - Now references react-best-practices patterns
+
+### Credits
+- **Vercel Engineering** - Inspiration from open-sourced agent-skills patterns (adapted, all Vercel mentions removed)
+
+---
+
 ## [1.6.0] - 2026-01-12
 
 ### Changed

@@ -315,6 +315,46 @@ Each unit of work makes future work easier.
 
 ---
 
+### web-design-guidelines
+
+**Triggers:** "ui design", "ux review", "design audit", "accessibility check"
+
+**Impact:** HIGH
+
+**Process:**
+- Audit UI against 11 rule categories
+- Color contrast (WCAG AA 4.5:1)
+- Typography (16px min body)
+- Touch targets (44px min)
+- Visual hierarchy and whitespace
+- Responsive design patterns
+
+**Integration:**
+- Pairs with: `frontend-architect`, `accessibility-specialist`, `frontend-design`
+
+---
+
+### react-best-practices
+
+**Triggers:** "React", "Next.js", "performance", "re-render", "bundle size"
+
+**Impact:** CRITICAL
+
+**Process:** 45 rules across 8 priority categories
+1. Eliminating Waterfalls (CRITICAL) - async patterns, Promise.all
+2. Bundle Size Optimization (CRITICAL) - dynamic imports, barrel avoidance
+3. Server-Side Performance (HIGH) - React.cache(), LRU caching
+4. Client-Side Data Fetching (MEDIUM-HIGH) - SWR deduplication
+5. Re-render Optimization (MEDIUM) - memo, state patterns
+6. Rendering Performance (MEDIUM) - content-visibility, SVG
+7. JavaScript Performance (LOW-MEDIUM) - loops, caching
+8. Advanced Patterns (LOW) - refs, callbacks
+
+**Integration:**
+- Pairs with: `frontend-architect`, `performance-engineer`, `code-reviewer`
+
+---
+
 ## Orchestrator
 
 ### using-mannay

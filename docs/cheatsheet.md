@@ -24,6 +24,8 @@
 | `feature-planning` | "plan feature", "spec" |
 | `prd-builder` | "create prd", "ralph prd" |
 | `ralph-mode` | "run ralph", "autonomous" |
+| `react-best-practices` | "React", "Next.js", "performance" |
+| `web-design-guidelines` | "ui design", "ux review" |
 
 ## Agent Quick Reference
 
