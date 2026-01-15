@@ -1,28 +1,208 @@
 ---
 name: ui-animation
-description: Implement polished UI animations with precise timing, easing, and scale values. Use when adding transitions, hover effects, motion, or making interfaces feel responsive. Covers buttons, modals, dropdowns, tooltips, toasts, drawers.
+description: Implement polished UI animations with precise timing, easing, and motion. Use when adding transitions, hover effects, or making interfaces feel responsive. Covers philosophy (when NOT to animate), timing, easing, component patterns, and accessibility.
 ---
 
 # UI Animation
 
-Animations must be **fast**, **natural**, and **purposeful**. Know when NOT to animate.
+Animations must be **fast**, **natural**, and **purposeful**. The best animation goes unnoticed—users feel the interface is polished without pointing to specific animations.
 
-## Core Timing Rule
+---
+
+## Philosophy: When to Animate
+
+**First question: Should this animate at all?**
+
+Animation appropriateness depends on interaction frequency:
+
+| Frequency | Recommendation |
+|-----------|----------------|
+| Rare (monthly) | Delightful animations welcome |
+| Occasional (daily) | Subtle, fast animations |
+| Frequent (100s/day) | Minimal or NO animation |
+| Keyboard-initiated | **NEVER** animate |
+
+**The test**: If users trigger this action hundreds of times daily, animation adds friction, not delight. Productivity tools (Raycast, Linear) benefit from zero animation on frequent actions.
+
+---
+
+## Core Timing
 
 **UI animations must stay under 300ms.** This is non-negotiable for responsive feel.
 
-| Element | Duration | Notes |
-|---------|----------|-------|
-| Button press | ~150ms | Quick tactile feedback |
-| Tooltip | 125ms | Fast appear/disappear |
-| Dropdown/popover | 150-200ms | Snappy open |
-| Modal | 200ms | Appears instantly responsive |
-| Drawer (iOS-style) | 500ms | Longer, uses specific curve |
-| Toast auto-dismiss | 4 seconds | Pause when tab inactive |
+| Element | Duration | Easing |
+|---------|----------|--------|
+| Button press | 150ms | ease-out |
+| Tooltip | 125ms | ease-out |
+| Dropdown/popover | 180ms | ease-out |
+| Modal | 200ms | ease-out |
+| Drawer (iOS-style) | 500ms | cubic-bezier(0.32, 0.72, 0, 1) |
+| Toast auto-dismiss | 4 seconds | — |
 
-## Button Press Pattern
+**Speed creates perceived performance.** 180ms feels more responsive than 400ms. When in doubt, go faster.
 
-Scale to **0.97** on active state with **~150ms ease-out**:
+---
+
+## Enter/Exit Patterns
+
+### The Enter Recipe
+
+Combine three properties for a "materializing" effect:
+
+```jsx
+initial={{ opacity: 0, translateY: 8, filter: "blur(4px)" }}
+animate={{ opacity: 1, translateY: 0, filter: "blur(0px)" }}
+transition={{ type: "spring", duration: 0.45, bounce: 0 }}
+```
+
+| Property | From | To | Purpose |
+|----------|------|-----|---------|
+| opacity | 0 | 1 | Fade in |
+| translateY | 8px | 0 | Subtle upward movement |
+| blur | 4px | 0 | "Coming into focus" effect |
+
+### Exit Asymmetry (Critical)
+
+**Exits must be subtler than enters.** User focus moves to what's next, not what's leaving.
+
+```jsx
+// WRONG: Same as enter
+exit={{ opacity: 0, translateY: 8, filter: "blur(4px)" }}
+
+// CORRECT: Subtler exit
+exit={{ opacity: 0, translateY: -8, filter: "blur(4px)" }}
+```
+
+Use smaller, fixed values for exits. Don't compete for attention.
+
+### Scale Rules
+
+**Never animate from scale(0)** — feels like element appears from nowhere.
+
+```jsx
+// WRONG: Unnatural
+initial={{ scale: 0 }}
+
+// CORRECT: Gentle, natural
+initial={{ scale: 0.93, opacity: 0 }}
+animate={{ scale: 1, opacity: 1 }}
+```
+
+| Element | Initial Scale |
+|---------|---------------|
+| Modal | 0.93 |
+| Dropdown | 0.93 |
+| Tooltip | 0.97 |
+| Button press | 0.97 |
+
+---
+
+## Easing
+
+### Custom Easing is Essential
+
+Built-in CSS easing (`ease`, `ease-in-out`) lacks strength. Always use custom curves.
+
+| Use Case | Easing | Why |
+|----------|--------|-----|
+| **Default (90% of UI)** | `ease-out` | Fast start, gentle stop. Feels responsive |
+| Moving elements | `ease-in-out` | Natural acceleration/deceleration |
+| **Never use** | `ease-in` | Speeds up at end—wrong for UI |
+| Interactive | `spring` | Natural deceleration |
+
+**Resources**: [easing.dev](https://easing.dev), [easings.co](https://easings.co)
+
+### Spring Configuration
+
+```jsx
+transition={{ type: "spring", duration: 0.45, bounce: 0 }}
+```
+
+| Parameter | Effect |
+|-----------|--------|
+| **bounce: 0** | Professional, refined (default for production) |
+| **bounce: 0.1** | Slight playfulness |
+| **bounce: 0.2+** | Only for explicitly playful contexts |
+| **stiffness** | Higher = faster to target |
+| **damping** | Higher = less oscillation |
+
+**Default to `bounce: 0`** for professional UI.
+
+---
+
+## Transform-Origin
+
+**Default `center` is wrong for most UI.** Elements should animate from their trigger point.
+
+```css
+/* Dropdown opens below button */
+.dropdown { transform-origin: top center; }
+
+/* Dropdown opens above */
+.dropdown[data-side="top"] { transform-origin: bottom center; }
+
+/* Context menu from click point */
+.menu { transform-origin: var(--origin-x) var(--origin-y); }
+```
+
+**Component libraries:**
+- Radix UI: `--radix-dropdown-menu-content-transform-origin`
+- Base UI: `--transform-origin`
+
+---
+
+## Interruptibility
+
+### Transitions vs Keyframes
+
+**CSS keyframes can't be interrupted.** When users trigger actions rapidly, elements "jump" instead of smoothly retargeting.
+
+```jsx
+// WRONG: Keyframes (can't interrupt)
+@keyframes slideIn {
+  from { transform: translateY(100%); }
+  to { transform: translateY(0); }
+}
+.toast { animation: slideIn 400ms ease; }
+
+// CORRECT: Transitions (can interrupt mid-flight)
+.toast {
+  transform: translateY(100%);
+  transition: transform 400ms ease;
+}
+.toast.mounted {
+  transform: translateY(0);
+}
+```
+
+### State-Driven Pattern
+
+```jsx
+useEffect(() => {
+  setMounted(true);
+}, []);
+
+// CSS handles animation via class change
+```
+
+### Velocity-Based Dismissal
+
+For swipe-to-dismiss (toasts, drawers), use velocity not distance:
+
+```javascript
+// WRONG: Distance threshold (requires long drag)
+if (dragDistance > 100) dismiss();
+
+// CORRECT: Velocity (fast short gestures work)
+const velocity = dragDistance / elapsedTime;
+if (velocity > 0.11) dismiss();
+```
+
+---
+
+## Component Patterns
+
+### Button Press
 
 ```css
 .button {
@@ -35,79 +215,7 @@ Scale to **0.97** on active state with **~150ms ease-out**:
 
 For subtler effect, use `scale(0.98)`.
 
-## Enter Animation Scale
-
-**Never animate from scale(0)** — feels like element appears from nowhere.
-
-Use **scale(0.9+)** as initial value. Recommended: **scale(0.93)** for dropdowns.
-
-```css
-/* Wrong */
-.dropdown[data-entering] {
-  transform: scale(0);
-  opacity: 0;
-}
-
-/* Correct */
-.dropdown[data-entering] {
-  transform: scale(0.93);
-  opacity: 0;
-}
-
-.dropdown[data-open] {
-  transform: scale(1);
-  opacity: 1;
-  transition: transform 180ms ease-out, opacity 180ms ease-out;
-}
-```
-
-## Easing Selection
-
-| Use Case | Easing | Why |
-|----------|--------|-----|
-| **Default (90% of UI)** | `ease-out` | Starts fast, decelerates. Feels responsive |
-| Moving on-screen elements | `ease-in-out` | Natural acceleration/deceleration |
-| Simple hover (bg color) | `ease` | Acceptable for basic effects |
-| **Never use** | `ease-in` | Speeds up at end — wrong for UI |
-
-Built-in CSS easings are often too weak. For custom curves, use [easing.dev](https://easing.dev) or [easings.co](https://easings.co).
-
-## iOS-Style Drawer Curve
-
-For smooth drawer/sheet animations matching iOS feel:
-
-```css
-.drawer {
-  transition: transform 500ms cubic-bezier(0.32, 0.72, 0, 1);
-}
-```
-
-This specific curve (`0.32, 0.72, 0, 1`) with 500ms duration mimics native iOS sheets.
-
-## Transform-Origin
-
-**Default `center` is wrong for most UI.** Elements should animate from their trigger point.
-
-```css
-/* Dropdown opens below button */
-.dropdown {
-  transform-origin: top center;
-}
-
-/* Dropdown opens above button */
-.dropdown[data-position="top"] {
-  transform-origin: bottom center;
-}
-
-/* Dropdown opens from corner */
-.dropdown[data-position="top-right"] {
-  transform-origin: top right;
-}
-```
-
-Set transform-origin based on where the trigger element is located.
-
-## Tooltip Pattern
+### Tooltip
 
 ```css
 .tooltip {
@@ -115,103 +223,220 @@ Set transform-origin based on where the trigger element is located.
   transform: scale(0.97);
   transition: transform 125ms ease-out, opacity 125ms ease-out;
 }
-
 .tooltip[data-visible] {
   opacity: 1;
   transform: scale(1);
 }
 
-/* After first tooltip opens, subsequent ones: no animation */
-.tooltip[data-instant] {
+/* After first tooltip, subsequent ones: instant */
+[data-tooltip-group="active"] .tooltip {
   transition-duration: 0ms;
 }
 ```
 
-Add delay before showing (prevents accidental activation). Once one tooltip is open, others should appear instantly.
+**Tooltip delay pattern**: First tooltip delayed + animated. Subsequent tooltips in same group: instant.
 
-## When NOT to Animate
-
-### Keyboard-Initiated Actions
-**Never animate keyboard navigation.** Arrow keys, Enter, Tab — these repeat hundreds of times daily. Animation makes them feel delayed.
-
-Command palettes and search interfaces work best with **zero opening animation**.
-
-### High-Frequency Interactions
-If users trigger an action hundreds of times daily, animation adds friction, not delight.
-
-### After First Tooltip
-Once one tooltip is visible, hovering to another should show it **immediately with no animation**.
-
-## Toast Component
+### Modal
 
 ```css
-.toast {
-  transition: transform 400ms ease-out, opacity 200ms ease-out;
+.modal-overlay {
+  opacity: 0;
+  transition: opacity 200ms ease-out;
+}
+.modal-overlay[data-open] {
+  opacity: 1;
 }
 
-/* Stack toasts with offset and scale */
-.toast[data-index="0"] { transform: translateY(0) scale(1); }
-.toast[data-index="1"] { transform: translateY(-14px) scale(0.95); }
-.toast[data-index="2"] { transform: translateY(-28px) scale(0.90); }
+.modal-content {
+  opacity: 0;
+  transform: scale(0.93);
+  transition: transform 200ms ease-out, opacity 200ms ease-out;
+}
+.modal-content[data-open] {
+  opacity: 1;
+  transform: scale(1);
+}
 ```
 
-- Default visibility: **4 seconds**
-- Pause timer when browser tab is inactive
-- Scale down by **0.05 × index** for depth effect
-- Gap of ~14px between stacked toasts
+### Dropdown
 
-### Swipe Dismiss
-Use velocity threshold of **~0.11** — allows short fast swipes to dismiss.
+```css
+.dropdown {
+  opacity: 0;
+  transform: scale(0.93);
+  transform-origin: top center;
+  transition: transform 180ms ease-out, opacity 180ms ease-out;
+  pointer-events: none;
+}
+.dropdown[data-open] {
+  opacity: 1;
+  transform: scale(1);
+  pointer-events: auto;
+}
+```
 
-## Performance Rules
+### iOS-Style Drawer
 
-**Only animate `transform` and `opacity`** — they use GPU compositing, stay smooth.
+```css
+.drawer {
+  transform: translateY(100%);
+  transition: transform 500ms cubic-bezier(0.32, 0.72, 0, 1);
+}
+.drawer[data-open] {
+  transform: translateY(0);
+}
+```
 
-Animating these triggers expensive layout/paint:
+The curve `cubic-bezier(0.32, 0.72, 0, 1)` matches native iOS sheets.
+
+### Icon Swap
+
+When icons change state (copy → check), animate the transition:
+
+```jsx
+<AnimatePresence mode="wait">
+  {isCopied ? (
+    <motion.div
+      initial={{ opacity: 0, scale: 0.8, filter: "blur(4px)" }}
+      animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
+      exit={{ opacity: 0, scale: 0.8, filter: "blur(4px)" }}
+    >
+      <CheckIcon />
+    </motion.div>
+  ) : (
+    <motion.div ...>
+      <CopyIcon />
+    </motion.div>
+  )}
+</AnimatePresence>
+```
+
+**See [component-patterns.md](references/component-patterns.md) for complete patterns.**
+
+---
+
+## Performance
+
+### Only Animate Transform + Opacity
+
+These use GPU compositing and stay smooth:
+- `transform` (translate, scale, rotate)
+- `opacity`
+- `filter` (blur, brightness)
+
+**Never animate** (triggers expensive layout/paint):
 - `width`, `height`
 - `padding`, `margin`
 - `top`, `left`, `right`, `bottom`
 - `border-width`
 
 ```css
-/* Bad - triggers layout */
+/* WRONG: Triggers layout */
 .expand { width: 100px; transition: width 200ms; }
 .expand:hover { width: 200px; }
 
-/* Good - GPU accelerated */
+/* CORRECT: GPU accelerated */
 .expand { transform: scaleX(1); transition: transform 200ms ease-out; }
 .expand:hover { transform: scaleX(2); }
 ```
 
-## Debugging Tip: Blur Trick
-
-When animation feels off despite tweaking easing/duration, add **2px blur** during transition:
+### will-change (Use Sparingly)
 
 ```css
-.element {
-  transition: transform 200ms ease-out, filter 200ms ease-out;
-}
-.element[data-transitioning] {
-  filter: blur(2px);
+/* CORRECT: Specific properties */
+.animated-button { will-change: transform, opacity; }
+
+/* WRONG: Too broad */
+* { will-change: transform; }
+```
+
+### Direct Style Updates for Drag
+
+CSS variables cause cascade recalculation. For frequent updates (dragging), update styles directly:
+
+```javascript
+// WRONG: Expensive cascade
+element.style.setProperty('--drag-y', `${y}px`);
+
+// CORRECT: No cascade
+element.style.transform = `translateY(${y}px)`;
+```
+
+---
+
+## Accessibility
+
+### prefers-reduced-motion (Mandatory)
+
+```css
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }
 ```
 
-Blurs the visual gap between states, tricks eye into seeing smooth transition.
+Or provide alternative animations:
+
+```css
+@media (prefers-reduced-motion: reduce) {
+  .modal-content {
+    /* Fade only, no scale */
+    transform: translate(-50%, -50%);
+    transition: opacity 200ms ease-out;
+  }
+}
+```
+
+### Vestibular Triggers to Avoid
+
+- Full-screen zoom effects
+- Parallax scrolling
+- Continuous spinning/rotation
+- Rapid flashing
+
+---
 
 ## Quick Reference
 
 ```
-Max duration:     < 300ms (rule)
-Button press:     scale(0.97), 150ms, ease-out
-Tooltip:          scale(0.97), 125ms, ease-out
-Modal:            scale(0.93), 200ms, ease-out
-Dropdown:         scale(0.93), 180ms, ease-out
-Drawer (iOS):     500ms, cubic-bezier(0.32, 0.72, 0, 1)
-Toast dismiss:    4 seconds
-Default easing:   ease-out
-Enter scale:      0.93 (never 0)
-Only animate:     transform, opacity
+Philosophy:        Should this animate? Check frequency first.
+Max duration:      < 300ms (except drawers at 500ms)
+Default easing:    ease-out
+Spring bounce:     0 (professional), 0.1+ (playful only)
+
+Button press:      scale(0.97), 150ms, ease-out
+Tooltip:           scale(0.97), 125ms, ease-out
+Modal:             scale(0.93), 200ms, ease-out
+Dropdown:          scale(0.93), 180ms, ease-out, origin from trigger
+Drawer (iOS):      500ms, cubic-bezier(0.32, 0.72, 0, 1)
+Toast:             4s dismiss, pause when inactive
+
+Enter:             opacity + translateY(8) + blur(4px)
+Exit:              SUBTLER than enter (translateY -8px)
+Scale:             Start from 0.93+ (never 0)
+
+Only animate:      transform, opacity, filter
+Never animate:     width, height, padding, margin, top/left
+
+Interruptibility:  Use transitions (not keyframes)
+Dismissal:         Use velocity threshold (0.11), not distance
+
+Accessibility:     prefers-reduced-motion is MANDATORY
 ```
+
+---
+
+## References
+
+- **[component-patterns.md](references/component-patterns.md)** — Full CSS patterns for all components
+- **[advanced-techniques.md](references/advanced-techniques.md)** — @property, linear(), layoutId, scroll-driven
+- **[common-mistakes.md](references/common-mistakes.md)** — Anti-patterns to avoid
+- **[audit-checklist.md](references/audit-checklist.md)** — Quick review checklist
 
 ---
 

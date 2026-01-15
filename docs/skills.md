@@ -332,22 +332,38 @@ These activate **automatically** - no trigger needed:
 
 **Activates:** Any visual component, page, or UI element
 
+**Philosophy:** First ask "Should this animate at all?" based on interaction frequency.
+
 **Process:**
-1. Apply precise timing (all UI < 300ms except drawers)
-2. Use correct easing (90% ease-out)
-3. Animate only transform + opacity
-4. Set correct transform-origin
-5. Respect `prefers-reduced-motion`
+1. Check frequency (100s/day = no animation, keyboard = never)
+2. Apply precise timing (all UI < 300ms except drawers)
+3. Use enter recipe: opacity + translateY + blur
+4. Make exits **subtler** than enters
+5. Scale from 0.93+ (never 0)
+6. Use correct easing (90% ease-out, custom curves)
+7. Set transform-origin from trigger point
+8. Use transitions (interruptible), not keyframes
+9. Respect `prefers-reduced-motion`
 
 **Quick Reference:**
 ```
+Philosophy:       Should this animate? Check frequency first.
 Button press:     scale(0.97), 150ms, ease-out
 Tooltip:          scale(0.97), 125ms, ease-out
-Modal:            scale(0.93), 200ms, ease-out
-Dropdown:         scale(0.93), 180ms, ease-out
+Modal:            scale(0.93), 200ms, ease-out + blur
+Dropdown:         scale(0.93), 180ms, ease-out, origin from trigger
 Drawer (iOS):     500ms, cubic-bezier(0.32, 0.72, 0, 1)
 Toast dismiss:    4 seconds (pause when inactive)
+
+Enter:            opacity + translateY(8) + blur(4px)
+Exit:             SUBTLER (translateY -8px, blur 2px)
 ```
+
+**References:**
+- `component-patterns.md` — Full CSS patterns
+- `advanced-techniques.md` — @property, linear(), layoutId
+- `common-mistakes.md` — Anti-patterns to avoid
+- `audit-checklist.md` — Quick review checklist
 
 **Integration:**
 - Called by: `frontend-design`, `component-new`, `page-new`
