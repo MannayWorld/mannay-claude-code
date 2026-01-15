@@ -1,6 +1,7 @@
 ---
 name: writing-plans
 description: Use when you have a spec or requirements for a multi-step task, before touching code
+impact: MEDIUM-HIGH
 ---
 
 # Writing Plans
@@ -14,6 +15,14 @@ Assume they are a skilled developer, but know almost nothing about our toolset o
 **Announce at start:** "I'm using the writing-plans skill to create the implementation plan."
 
 **Save plans to:** `planning/YYYY-MM-DD-<feature-name>.md`
+
+## Prerequisites
+
+- A spec, design document, or requirements exist (from `brainstorming` or `task-analysis`)
+- Access to the project codebase (to identify existing patterns, file locations)
+- package.json is readable (for framework detection)
+- `planning/` directory exists or can be created
+- Understanding of the feature scope (if unclear, use `brainstorming` first)
 
 ## Framework Detection
 
@@ -178,6 +187,42 @@ initProgress(planFile, 'Feature Name', tasks);
 - **progress.md**: Visual dashboard with completed/in-progress/pending sections
 
 **Tell the user:** "Progress tracking initialized. If this session crashes, progress is preserved in `planning/<name>-progress.md`."
+
+## Output Format
+
+**Primary Output: Plan Document**
+
+Saved to `planning/YYYY-MM-DD-<feature-name>.md` with:
+
+1. **Header Block** - Goal, architecture, tech stack, framework, quantified standards
+2. **Task Sections** - Numbered tasks with:
+   - Files to create/modify (exact paths)
+   - Framework patterns to follow
+   - Step-by-step instructions (2-5 min each)
+   - Complete code snippets
+   - Exact test/verification commands
+   - Commit instructions
+
+**Secondary Output: Progress Files**
+
+Created alongside the plan:
+- `<plan>-progress.json` - Machine-readable state for crash recovery
+- `<plan>-progress.md` - Human-readable dashboard
+
+**Verbal Output:**
+
+After saving:
+```
+Plan complete and saved to `planning/<filename>.md`.
+
+Progress tracking initialized. If this session crashes, progress is preserved.
+
+Two execution options:
+1. Subagent-Driven (this session) - Fresh subagent per task, review between tasks
+2. Parallel Session (separate) - Batch execution with checkpoints
+
+Which approach?
+```
 
 ## Execution Handoff
 

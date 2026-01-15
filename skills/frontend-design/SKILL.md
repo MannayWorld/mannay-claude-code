@@ -1,6 +1,7 @@
 ---
 name: frontend-design
 description: "Create distinctive, production-grade frontend interfaces with high design quality. Use this skill when the user asks to build web components, pages, or applications. Generates creative, polished code that avoids generic AI aesthetics."
+impact: HIGH
 triggers:
   - "build a page"
   - "create a component"
@@ -160,6 +161,7 @@ Before presenting the design:
 - [ ] Code is production-ready and accessible
 - [ ] Responsive across breakpoints
 - [ ] Performance considered (no massive bundles)
+- [ ] Web interface guidelines compliance (use `web-design-guidelines` skill to audit)
 
 ---
 
@@ -170,3 +172,10 @@ Before presenting the design:
 Don't hold back. Show what can truly be created when thinking outside the box and committing fully to a distinctive vision.
 
 Every design should be different. Vary themes, fonts, aesthetics. NEVER converge on common safe choices.
+
+---
+
+## Related Skills
+
+- **web-design-guidelines** - Audit UI code for accessibility, forms, animation, typography compliance
+- **react-best-practices** - Performance optimization patterns for React/Next.js (45 rules)

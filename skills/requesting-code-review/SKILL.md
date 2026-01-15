@@ -1,6 +1,7 @@
 ---
 name: requesting-code-review
 description: Use when executing implementation plans with independent tasks in the current session
+impact: MEDIUM
 ---
 
 # Requesting Code Review (Subagent-Driven Development)

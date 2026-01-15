@@ -1,6 +1,7 @@
 ---
 name: task-analysis
 description: "Analyze task complexity and create an actionable implementation plan. Use when given a task without a plan. Triggers on: 'implement this', 'build this feature', 'add this functionality', 'how long will this take', 'break this down', 'what's involved in'."
+impact: MEDIUM
 triggers:
   - "implement this"
   - "build this feature"
@@ -16,6 +17,13 @@ triggers:
 Analyze task complexity and create a clear, actionable implementation plan.
 
 **Announce at start:** "I'm using the task-analysis skill to analyze this task."
+
+## Prerequisites
+
+- Access to the project codebase (to analyze existing patterns and dependencies)
+- package.json must be readable (for framework and dependency detection)
+- User has provided a task description or requirement
+- Task is concrete enough to analyze (if too vague, use `brainstorming` first)
 
 ## When to Use
 
@@ -194,6 +202,32 @@ pnpm install package-name
 4. Use pnpm for all package operations
 5. Commit frequently after each passing test
 ```
+
+## Error Handling
+
+**Insufficient Context:**
+- If task is too vague to analyze: "I need more context to analyze this task. Can you clarify: [specific questions]"
+- If codebase access is limited: Proceed with assumptions, clearly documented
+
+**Framework Detection Failure:**
+- If package.json is missing or unreadable: Ask user to confirm framework and version
+- If framework is unfamiliar: Research best practices before proceeding
+
+**Scope Uncertainty:**
+- If task could be Small or Very Large depending on interpretation: Present both scenarios
+- Ask user to confirm scope before finalizing analysis
+
+**Dependency Conflicts:**
+- If task requires incompatible dependencies: Surface the conflict early
+- Propose alternatives or workarounds
+
+**Agent Invocation Issues:**
+- If relevant agents are unavailable: Note the gap and proceed with best judgment
+- Document assumptions that would benefit from expert review
+
+**Estimation Uncertainty:**
+- If complexity is genuinely unclear: Provide a range (e.g., "2-5 days depending on X")
+- Identify the unknowns that affect the estimate
 
 ## Integration
 

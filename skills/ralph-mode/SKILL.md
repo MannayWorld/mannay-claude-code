@@ -1,6 +1,7 @@
 ---
 name: ralph-mode
 description: "Autonomous loop execution of PRD user stories. Claude works independently completing stories one at a time with commits. Use when you have a PRD and want autonomous implementation. Triggers on: 'run ralph', 'start ralph', 'autonomous mode', 'execute the prd', 'implement all stories'."
+impact: MEDIUM
 category: execution
 triggers:
   - "run ralph"

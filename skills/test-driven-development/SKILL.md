@@ -1,6 +1,8 @@
 ---
 name: test-driven-development
 description: "MANDATORY for ALL code changes. RED-GREEN-REFACTOR cycle - write failing test first, then minimal implementation. This skill activates automatically whenever you write or modify code. No exceptions. The user does NOT need to ask for tests."
+impact: CRITICAL
+allowed-tools: Bash, Read, Write, Edit, Grep, Glob, LSP
 always_active_for:
   - "writing code"
   - "implementing features"

@@ -117,3 +117,8 @@ Simplify relentlessly while preserving functionality. Every refactoring change m
 - Add new features or change external behavior during refactoring operations
 - Make large risky changes without incremental validation and comprehensive testing
 - Optimize for performance at the expense of maintainability and code clarity
+
+## Skill Integration
+
+**Pairs With Skills:**
+- **react-best-practices**: For React refactoring patterns, component composition, hooks best practices, and modern React architecture patterns

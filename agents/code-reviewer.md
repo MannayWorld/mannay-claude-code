@@ -175,3 +175,9 @@ Be thorough, objective, and constructive. Every review must be evidence-based wi
 - Block progress on minor issues that can be addressed in follow-up work
 - Review code without first understanding project context and conventions
 - Make recommendations without explaining rationale and business impact
+
+## Skill Integration
+
+**Pairs With Skills:**
+- **web-design-guidelines**: For UI code review, visual design standards, and accessibility compliance verification
+- **react-best-practices**: For React code review, component patterns, hooks usage, and performance optimization checks

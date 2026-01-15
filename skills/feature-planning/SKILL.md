@@ -1,6 +1,7 @@
 ---
 name: feature-planning
 description: Use when planning new feature implementation with technical specifications and architecture decisions
+impact: MEDIUM-HIGH
 ---
 
 # Feature Planning

@@ -1,6 +1,7 @@
 ---
 name: executing-plans
 description: Use when you have a written implementation plan to execute in a separate session with review checkpoints
+impact: MEDIUM-HIGH
 ---
 
 # Executing Plans
@@ -12,6 +13,65 @@ Load plan, review critically, execute tasks in batches, report for review betwee
 **Core principle:** Batch execution with checkpoints for architect review.
 
 **Announce at start:** "I'm using the executing-plans skill to implement this plan."
+
+## Prerequisites
+
+- A written implementation plan exists (created by `writing-plans` or `task-analysis`)
+- Plan file is accessible at a known path (typically `planning/YYYY-MM-DD-<feature>.md`)
+- Development environment is set up (dependencies installed, project builds)
+- Git repository is initialized and clean (no uncommitted changes blocking work)
+- pnpm is available for package operations
+
+## Output Format
+
+**After Each Batch:**
+```markdown
+### Batch N Complete
+
+**Tasks Completed:**
+- Task X: [brief description] (commit: abc123f)
+- Task Y: [brief description] (commit: def456g)
+
+**Verification Results:**
+- Tests: X passing, Y total
+- Coverage: XX%
+- Build: SUCCESS/FAIL
+- Lint: X warnings, Y errors
+
+**Deviations from Plan:**
+- [None, or list with justification]
+
+**Next Batch Preview:**
+- Task A: [description]
+- Task B: [description]
+
+Ready for feedback.
+```
+
+**After All Tasks Complete:**
+```markdown
+### Implementation Complete
+
+**Summary:**
+- Total tasks: X
+- Total commits: Y
+- Final coverage: XX%
+- Build status: SUCCESS
+
+**Files Created/Modified:**
+- path/to/file1.ts (created)
+- path/to/file2.ts (modified)
+
+**Verification:**
+- All tests passing
+- Build successful
+- Standards met (coverage, performance, accessibility)
+
+**Next Steps:**
+- [ ] Code review
+- [ ] PR creation
+- [ ] Deployment
+```
 
 ## The Process
 

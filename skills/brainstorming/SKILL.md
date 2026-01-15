@@ -1,6 +1,7 @@
 ---
 name: brainstorming
 description: "MANDATORY before building any new feature. Explore design approaches through collaborative dialogue before implementation. This skill activates automatically for any new feature or significant change. Design first, code second."
+impact: HIGH
 always_active_for:
   - "new features"
   - "significant changes"
@@ -14,6 +15,13 @@ always_active_for:
 ## Overview
 
 Help turn ideas into fully formed designs and specs through natural collaborative dialogue.
+
+## Prerequisites
+
+- Access to the project codebase (to analyze existing patterns and architecture)
+- package.json must be readable (for framework detection)
+- User has an idea or feature they want to explore
+- No detailed implementation plan exists yet (if one does, use `executing-plans` instead)
 
 Start by understanding the current project context, then ask questions one at a time to refine the idea. Once you understand what you're building, present the design in small sections (200-300 words), checking after each section whether it looks right so far.
 
@@ -70,6 +78,45 @@ Do NOT just mention agents. Actually invoke them with the Task tool.
   - Testing: ≥80% code coverage
   - Bundle size: <50KB gzipped for client-side libraries
 - Be ready to go back and clarify if something doesn't make sense
+
+## Output Format
+
+The brainstorming skill produces:
+
+1. **Design Document** - Saved to `planning/YYYY-MM-DD-<topic>-design.md`:
+   - Architecture overview
+   - Component breakdown
+   - Data flow diagrams (textual)
+   - Error handling strategy
+   - Testing approach
+   - Performance considerations
+   - Quantified standards (Lighthouse, coverage, bundle size)
+
+2. **Session Summary** - Verbal confirmation of:
+   - Agreed approach and trade-offs
+   - Key decisions made
+   - Next steps (implementation plan or further exploration)
+
+## Error Handling
+
+**User Disengagement:**
+- If user stops responding, pause and ask if they want to continue
+- Offer to save current progress to a design document
+
+**Conflicting Requirements:**
+- Surface conflicts explicitly: "These two requirements seem to conflict..."
+- Ask user to prioritize or clarify
+
+**Framework Limitations:**
+- When framework constraints conflict with desired features, present alternatives
+- Example: "Next.js Edge Runtime doesn't support this. Options: 1) Use Node runtime, 2) Redesign approach"
+
+**Agent Invocation Failures:**
+- If an agent task fails, note the limitation and proceed with available information
+- Offer to revisit that aspect later with more context
+
+**Scope Creep:**
+- If design grows beyond original scope, pause and confirm: "This has grown to include X, Y, Z. Should we scope down?"
 
 ## After the Design
 

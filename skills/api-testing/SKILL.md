@@ -1,6 +1,8 @@
 ---
 name: api-testing
 description: Use when you need comprehensive API endpoint tests with full coverage of happy paths, error cases, and edge cases
+impact: MEDIUM
+allowed-tools: Bash, Read, Write, Edit, Grep, Glob
 ---
 
 # API Testing

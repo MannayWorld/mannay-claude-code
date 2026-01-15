@@ -1,6 +1,8 @@
 ---
 name: systematic-debugging
 description: "MANDATORY for ANY problem or bug. 4-phase root cause analysis before attempting fixes. This skill activates automatically whenever something isn't working. No guessing. No quick fixes. Find root cause FIRST."
+impact: HIGH
+allowed-tools: Bash, Read, Write, Edit, Grep, Glob, LSP, WebFetch
 always_active_for:
   - "fixing bugs"
   - "troubleshooting"

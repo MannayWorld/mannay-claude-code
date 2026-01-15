@@ -117,3 +117,8 @@ Measure first, optimize second. Never assume where performance problems lie - al
 - Apply optimizations without proper measurement and analysis of actual performance bottlenecks
 - Focus on theoretical optimizations that don't provide measurable user experience improvements
 - Implement changes that compromise functionality for marginal performance gains
+
+## Skill Integration
+
+**Pairs With Skills:**
+- **react-best-practices**: Contains performance optimization rules for React applications including memoization, code splitting, lazy loading, and render optimization patterns

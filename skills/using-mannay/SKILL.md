@@ -1,6 +1,7 @@
 ---
 name: using-mannay
 description: "Master orchestrator for all Mannay skills, agents, and commands. Automatically loaded to help Claude select the right tools. Contains keyword-to-tool mapping for smart auto-detection even with short prompts."
+impact: HIGH
 triggers:
   - "what tools are available"
   - "how do I use"
@@ -104,18 +105,20 @@ Example: "Add user authentication"
 
 ### Building UI (Full Chain)
 ```
-brainstorming → frontend-design → frontend-architect → accessibility-specialist → TDD → code-simplifier → review → git
+brainstorming → frontend-design → react-best-practices → frontend-architect → accessibility-specialist → web-design-guidelines → TDD → code-simplifier → review → git
 ```
 
 Example: "Build a settings page"
 1. **brainstorming** - Explore UX approaches
 2. **frontend-design** - Create distinctive visual design
-3. **frontend-architect** - Component structure, state management
-4. **accessibility-specialist** - WCAG compliance, keyboard nav
-5. **TDD** - Write tests first, then implement
-6. **code-simplifier** - Simplify code while preserving functionality (MANDATORY)
-7. **code-reviewer** - Review quality
-8. **git** - Commit with conventional message
+3. **react-best-practices** - Apply performance patterns (if React/Next.js)
+4. **frontend-architect** - Component structure, state management
+5. **accessibility-specialist** - WCAG compliance, keyboard nav
+6. **web-design-guidelines** - Audit for accessibility, forms, animation compliance
+7. **TDD** - Write tests first, then implement
+8. **code-simplifier** - Simplify code while preserving functionality (MANDATORY)
+9. **code-reviewer** - Review quality
+10. **git** - Commit with conventional message
 
 ### Building API (Full Chain)
 ```
@@ -183,13 +186,15 @@ Don't just match keywords. Analyze WHAT the user wants to accomplish.
 | Task Involves | Always Include |
 |---------------|----------------|
 | User accounts, login, passwords, sessions | security-engineer + backend-architect |
-| Forms, validation, input | accessibility-specialist + frontend-architect |
+| Forms, validation, input | accessibility-specialist + frontend-architect + web-design-guidelines |
 | Database, queries, schemas | backend-architect |
 | API endpoints, REST, GraphQL | api-designer + backend-architect |
-| UI components, pages, layouts | frontend-architect + frontend-design |
+| UI components, pages, layouts | frontend-architect + frontend-design + web-design-guidelines |
+| React/Next.js components | frontend-architect + react-best-practices |
 | Types, interfaces, generics | typescript-pro |
 | Payments, sensitive data | security-engineer |
-| Public-facing pages | accessibility-specialist + performance-engineer |
+| Public-facing pages | accessibility-specialist + performance-engineer + web-design-guidelines |
+| Performance optimization | performance-engineer + react-best-practices (if React) |
 
 ---
 
@@ -232,6 +237,8 @@ When multiple tools apply, invoke in this order:
 
 **Design & UI:**
 - `mannay:frontend-design` - Create distinctive, production-grade interfaces (use for UI/component creation)
+- `mannay:web-design-guidelines` - Audit UI code for accessibility, forms, animation, typography (use for UI review/audit)
+- `mannay:react-best-practices` - 45 React/Next.js performance optimization rules (use for React code)
 
 **Autonomous Execution:**
 - `mannay:ralph-mode` - Autonomous PRD story execution with commits (use for long-running autonomous work)
@@ -461,4 +468,6 @@ Apply the full chain for that task type.
 - `prd-builder` — For Ralph PRDs
 - `ralph-mode` — For autonomous execution
 - `git` — For all commits
+- `web-design-guidelines` — For UI auditing
+- `react-best-practices` — For React/Next.js optimization
 - All domain agents — Based on task type

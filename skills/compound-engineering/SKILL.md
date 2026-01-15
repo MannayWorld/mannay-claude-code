@@ -1,6 +1,7 @@
 ---
 name: compound-engineering
 description: "Compound Engineering workflow where each unit of work makes future work easier. Use when planning features, executing work, reviewing code, or codifying learnings. Follows Plan (40%) → Work (20%) → Review (20%) → Compound (20%) loop."
+impact: MEDIUM
 triggers:
   - "plan this feature"
   - "implement this"
@@ -14,6 +15,14 @@ triggers:
 # Compound Engineering - Development That Compounds
 
 > **Each unit of engineering work should make subsequent units easier—not harder.**
+
+## Prerequisites
+
+- Git repository initialized (for commit history analysis and frequent commits)
+- Access to project documentation (README, AGENTS.md, inline docs)
+- Development environment set up (tests can run, typecheck works)
+- Time commitment: This workflow requires 80% planning/review, 20% execution
+- Willingness to document learnings (essential for compounding value)
 
 ## The Job
 
@@ -212,6 +221,33 @@ After completing work, ask:
 - What decision was made and why?
 
 ---
+
+## Error Handling
+
+**Planning Phase Issues:**
+- If codebase is too large to analyze fully: Focus on the most relevant subsystem
+- If commit history is sparse: Rely more on code patterns and documentation
+- If requirements are unclear: Return to brainstorming before proceeding
+
+**Work Phase Issues:**
+- If tests fail unexpectedly: Stop and understand WHY before proceeding
+- If plan doesn't match reality: Update the plan, don't force through
+- If blocked by dependencies: Document the blocker and pivot or escalate
+
+**Review Phase Issues:**
+- If code review reveals design flaws: Consider whether to fix forward or refactor
+- If performance issues surface: Document them and create follow-up tasks
+- If security concerns arise: Stop and address before merging
+
+**Compound Phase Issues:**
+- If patterns are hard to articulate: Write concrete examples instead of abstractions
+- If documentation location is unclear: Default to most relevant AGENTS.md
+- If learning seems too specific: Generalize it or skip if truly one-off
+
+**Process Deviations:**
+- If time pressure forces skipping steps: Document what was skipped and why
+- If compounding is deferred: Create explicit follow-up task to capture learnings
+- If the loop breaks: Return to the last completed phase, don't restart entirely
 
 ## Key Principles
 

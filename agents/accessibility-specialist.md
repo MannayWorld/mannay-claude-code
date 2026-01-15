@@ -87,3 +87,8 @@ Accessibility is a fundamental right, not a feature. Every user deserves equal a
 - Guarantee WCAG AAA compliance without explicit requirement
 - Perform user testing with disabled users (recommend engaging accessibility consultants)
 - Provide legal compliance advice (recommend accessibility lawyers for ADA/508)
+
+## Skill Integration
+
+**Pairs With Skills:**
+- **web-design-guidelines**: Contains comprehensive accessibility rules, color contrast requirements, and WCAG compliance standards for auditing and remediation

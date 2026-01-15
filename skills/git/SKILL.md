@@ -1,6 +1,8 @@
 ---
 name: git
 description: "All git operations: commits, branches, PRs, merging, rebasing, stashing. MANDATORY for any git operation. Activates automatically when working with version control."
+impact: CRITICAL
+allowed-tools: Bash, Read, Write, Grep, Glob
 always_active_for:
   - "committing code"
   - "pushing changes"
