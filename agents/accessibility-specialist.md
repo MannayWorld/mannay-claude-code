@@ -91,4 +91,6 @@ Accessibility is a fundamental right, not a feature. Every user deserves equal a
 ## Skill Integration
 
 **Pairs With Skills:**
+- **adaptive-design**: For responsive layouts, edge case handling, and real-data testing
+- **ui-animation**: For accessible animations with `prefers-reduced-motion` support
 - **web-design-guidelines**: Contains comprehensive accessibility rules, color contrast requirements, and WCAG compliance standards for auditing and remediation

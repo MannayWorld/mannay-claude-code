@@ -79,6 +79,26 @@ This includes:
 Task(subagent_type="code-simplifier", prompt="Simplify the code I just implemented while preserving functionality")
 ```
 
+## 5. Adaptive Design & UI Animation for ANY Visual Work
+
+**ANY task that creates or modifies visual components MUST use adaptive-design AND ui-animation.**
+
+This includes:
+- "Build a component" → adaptive-design + ui-animation
+- "Create a page" → adaptive-design + ui-animation
+- "Add a button" → adaptive-design + ui-animation
+- "Design a modal" → adaptive-design + ui-animation
+- "Update the UI" → adaptive-design + ui-animation
+- "Make it responsive" → adaptive-design + ui-animation
+
+**The user does NOT need to say "animation" or "responsive".** If you're creating visual elements, these skills are MANDATORY.
+
+**How to invoke:**
+```
+Skill("mannay:adaptive-design") — For layout, data handling, edge cases
+Skill("mannay:ui-animation") — For transitions, hover effects, motion
+```
+
 ---
 
 # MULTI-AGENT CHAINING (Use ALL Relevant Agents)
@@ -106,20 +126,22 @@ Example: "Add user authentication"
 
 ### Building UI (Full Chain)
 ```
-brainstorming → frontend-design → react-best-practices → frontend-architect → accessibility-specialist → web-design-guidelines → TDD → code-simplifier → review → git
+brainstorming → frontend-design → adaptive-design → ui-animation → react-best-practices → frontend-architect → accessibility-specialist → web-design-guidelines → TDD → code-simplifier → review → git
 ```
 
 Example: "Build a settings page"
 1. **brainstorming** - Explore UX approaches
 2. **frontend-design** - Create distinctive visual design
-3. **react-best-practices** - Apply performance patterns (if React/Next.js)
-4. **frontend-architect** - Component structure, state management
-5. **accessibility-specialist** - WCAG compliance, keyboard nav
-6. **web-design-guidelines** - Audit for accessibility, forms, animation compliance
-7. **TDD** - Write tests first, then implement
-8. **code-simplifier** - Simplify code while preserving functionality (MANDATORY)
-9. **code-reviewer** - Review quality
-10. **git** - Commit with conventional message
+3. **adaptive-design** - Design for real data, edge cases, responsive layouts (MANDATORY for visual)
+4. **ui-animation** - Polished animations with correct timing/easing (MANDATORY for visual)
+5. **react-best-practices** - Apply performance patterns (if React/Next.js)
+6. **frontend-architect** - Component structure, state management
+7. **accessibility-specialist** - WCAG compliance, keyboard nav
+8. **web-design-guidelines** - Audit for accessibility, forms, animation compliance
+9. **TDD** - Write tests first, then implement
+10. **code-simplifier** - Simplify code while preserving functionality (MANDATORY)
+11. **code-reviewer** - Review quality
+12. **git** - Commit with conventional message
 
 ### Building API (Full Chain)
 ```
@@ -187,14 +209,16 @@ Don't just match keywords. Analyze WHAT the user wants to accomplish.
 | Task Involves | Always Include |
 |---------------|----------------|
 | User accounts, login, passwords, sessions | security-engineer + backend-architect |
-| Forms, validation, input | accessibility-specialist + frontend-architect + web-design-guidelines |
+| Forms, validation, input | accessibility-specialist + frontend-architect + web-design-guidelines + adaptive-design |
 | Database, queries, schemas | backend-architect |
 | API endpoints, REST, GraphQL | api-designer + backend-architect |
-| UI components, pages, layouts | frontend-architect + frontend-design + web-design-guidelines |
-| React/Next.js components | frontend-architect + react-best-practices |
+| UI components, pages, layouts | frontend-architect + frontend-design + web-design-guidelines + **adaptive-design + ui-animation** |
+| React/Next.js components | frontend-architect + react-best-practices + **adaptive-design + ui-animation** |
+| Buttons, modals, dropdowns, tooltips | frontend-architect + **ui-animation** (animation patterns) |
+| Responsive design, fluid layouts | frontend-architect + **adaptive-design** (layout patterns) |
 | Types, interfaces, generics | typescript-pro |
 | Payments, sensitive data | security-engineer |
-| Public-facing pages | accessibility-specialist + performance-engineer + web-design-guidelines |
+| Public-facing pages | accessibility-specialist + performance-engineer + web-design-guidelines + **adaptive-design** |
 | Performance optimization | performance-engineer + react-best-practices (if React) |
 
 ---
@@ -238,6 +262,8 @@ When multiple tools apply, invoke in this order:
 
 **Design & UI:**
 - `mannay:frontend-design` - Create distinctive, production-grade interfaces (use for UI/component creation)
+- `mannay:adaptive-design` - Design with real data, edge cases, responsive layouts (MANDATORY for visual components)
+- `mannay:ui-animation` - Polished animations with precise timing, easing, scale values (MANDATORY for visual components)
 - `mannay:web-design-guidelines` - Audit UI code for accessibility, forms, animation, typography (use for UI review/audit)
 - `mannay:react-best-practices` - 45 React/Next.js performance optimization rules (use for React code)
 
@@ -312,10 +338,11 @@ For ANY short prompt, ask: **"What is the user trying to accomplish?"**
 
 | User Says | DON'T Think | DO Think |
 |-----------|-------------|----------|
-| "login page" | "No keywords match" | "Building UI + auth → brainstorming + frontend-design + security-engineer + backend-architect + TDD" |
+| "login page" | "No keywords match" | "Building UI + auth → brainstorming + frontend-design + adaptive-design + ui-animation + security-engineer + backend-architect + TDD" |
 | "it's slow" | "slow = performance-engineer only" | "Performance issue → debugging first + performance-engineer + relevant domain agents + TDD" |
-| "add button" | "Simple, just do it" | "UI change → frontend-architect + accessibility-specialist + TDD" |
+| "add button" | "Simple, just do it" | "UI change → frontend-architect + accessibility-specialist + adaptive-design + ui-animation + TDD" |
 | "fix auth" | "Fix = debugging only" | "Bug in auth → debugging + security-engineer + backend-architect + TDD" |
+| "modal component" | "Simple component" | "Visual component → frontend-design + adaptive-design + ui-animation + accessibility-specialist + TDD" |
 
 ### The Rule for Short Prompts
 
@@ -343,10 +370,12 @@ For ANY short prompt, ask: **"What is the user trying to accomplish?"**
 ```
 1. brainstorming - What settings? UX approach?
 2. frontend-design - Distinctive visual design
-3. frontend-architect - Component structure
-4. accessibility-specialist - WCAG, keyboard nav
-5. TDD - Write tests FIRST, then implement
-6. code-reviewer - Final quality check
+3. adaptive-design - Real data handling, edge cases, responsive layout
+4. ui-animation - Button presses, transitions, hover states
+5. frontend-architect - Component structure
+6. accessibility-specialist - WCAG, keyboard nav
+7. TDD - Write tests FIRST, then implement
+8. code-reviewer - Final quality check
 ```
 
 ### "Fix the login bug"
@@ -464,6 +493,8 @@ Apply the full chain for that task type.
 - `brainstorming` — For new features
 - `test-driven-development` — For all code changes
 - `systematic-debugging` — For any bugs/issues
+- `adaptive-design` — For visual components (MANDATORY)
+- `ui-animation` — For visual components (MANDATORY)
 - `task-analysis` — For task breakdown
 - `feature-planning` — For feature specs
 - `prd-builder` — For Ralph PRDs

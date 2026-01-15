@@ -175,7 +175,31 @@ Every design should be different. Vary themes, fonts, aesthetics. NEVER converge
 
 ---
 
+## MANDATORY Companion Skills
+
+When using `frontend-design`, you MUST also invoke these skills:
+
+### 1. Adaptive Design (REQUIRED)
+Invoke `mannay:adaptive-design` for:
+- Real data handling (not idealized mock data)
+- Edge cases (empty, minimal, maximum content)
+- Responsive layouts (constraint-based, not pixel-perfect)
+- Component robustness
+
+### 2. UI Animation (REQUIRED)
+Invoke `mannay:ui-animation` for:
+- Button press feedback (scale 0.97, 150ms ease-out)
+- Modal/dropdown transitions (scale 0.93, 200ms ease-out)
+- Hover states and micro-interactions
+- Toast notifications and loading states
+
+**These are NON-NEGOTIABLE.** Every visual component needs:
+- Proper data handling (adaptive-design)
+- Polished motion (ui-animation)
+
 ## Related Skills
 
+- **adaptive-design** - Design with real data, edge cases, responsive layouts (MANDATORY)
+- **ui-animation** - Polished animations with precise timing/easing (MANDATORY)
 - **web-design-guidelines** - Audit UI code for accessibility, forms, animation, typography compliance
 - **react-best-practices** - Performance optimization patterns for React/Next.js (45 rules)

@@ -7,7 +7,7 @@
 
 ## Features
 
-- **15 Skills** - Systematic workflows that auto-activate (TDD, debugging, brainstorming, react-best-practices)
+- **17 Skills** - Systematic workflows that auto-activate (TDD, debugging, brainstorming, react-best-practices, adaptive-design, ui-animation)
 - **15 Agents** - Domain specialists for architecture, security, performance
 - **20+ Commands** - Quick scaffolding for APIs, components, pages
 - **Ralph Mode** - Autonomous execution from PRDs
@@ -33,6 +33,8 @@ cd ~/.claude/plugins/marketplaces/mannay-claude-code && git pull
 **React & Design Excellence:**
 - `react-best-practices` - 45 performance rules across 8 priority categories (waterfalls, bundle size, re-renders)
 - `web-design-guidelines` - UI/UX compliance auditor with 11 rule categories
+- `adaptive-design` - **NEW** Real data, edge cases, responsive layouts (MANDATORY for visual)
+- `ui-animation` - **NEW** Polished animations with precise timing/easing (MANDATORY for visual)
 
 **Build System & CI/CD:**
 - TypeScript build system for react-best-practices (generates AGENTS.md from rules)

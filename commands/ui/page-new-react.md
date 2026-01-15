@@ -5,6 +5,21 @@ model: claude-opus-4-5
 
 Generate a new page component for React Router following modern patterns.
 
+## MANDATORY: Apply Design Skills
+
+Before generating any page, you MUST apply these skills:
+
+1. **adaptive-design** - Design for real data, edge cases, responsive layouts
+   - Test with empty, minimal, and maximum content
+   - Handle missing optional fields gracefully
+   - Use constraint-based layouts, not fixed pixels
+
+2. **ui-animation** - Implement polished animations
+   - Page transitions: scale(0.93) to scale(1), 200ms ease-out
+   - Modal/dropdown animations following timing guidelines
+   - Only animate `transform` and `opacity`
+   - Respect `prefers-reduced-motion`
+
 ## Page Specification
 
 $ARGUMENTS

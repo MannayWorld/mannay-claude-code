@@ -10,6 +10,8 @@ Plugin with skills, agents, and commands. Use `Skill` tool to invoke skills when
 | `mannay-claude-code:brainstorming` | New features, design decisions |
 | `mannay-claude-code:systematic-debugging` | Bugs, errors, investigations |
 | `mannay-claude-code:test-driven-development` | Writing/modifying code |
+| `mannay-claude-code:adaptive-design` | **MANDATORY** for visual components - real data, edge cases, responsive |
+| `mannay-claude-code:ui-animation` | **MANDATORY** for visual components - animations, timing, easing |
 
 ## Git Rules
 

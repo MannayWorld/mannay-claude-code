@@ -5,6 +5,22 @@ model: claude-opus-4-5
 
 Generate a new React component following 2025 best practices.
 
+## MANDATORY: Apply Design Skills
+
+Before generating any component, you MUST apply these skills:
+
+1. **adaptive-design** - Design for real data, edge cases, responsive layouts
+   - Test with empty, minimal, and maximum content
+   - Handle missing optional fields gracefully
+   - Use constraint-based layouts, not fixed pixels
+
+2. **ui-animation** - Implement polished animations
+   - Button press: `scale(0.97)`, 150ms, ease-out
+   - Modals: `scale(0.93)`, 200ms, ease-out
+   - Dropdowns: `scale(0.93)`, 180ms, ease-out
+   - Only animate `transform` and `opacity`
+   - Respect `prefers-reduced-motion`
+
 ## Component Specification
 
 $ARGUMENTS
@@ -126,6 +142,26 @@ export async function Component({ }: Props) {
 -  Composition over inheritance
 -  Extract complex logic to hooks
 -  Keep components small (<200 lines)
+
+## Animation Standards (from ui-animation skill)
+
+-  Button: `transition: transform 150ms ease-out` + `:active { transform: scale(0.97) }`
+-  Modal: Enter from `scale(0.93)` to `scale(1)` in 200ms ease-out
+-  Dropdown: Enter from `scale(0.93)` to `scale(1)` in 180ms ease-out
+-  Tooltip: Enter from `scale(0.97)` to `scale(1)` in 125ms ease-out
+-  Only animate `transform` and `opacity` (GPU accelerated)
+-  Add `@media (prefers-reduced-motion: reduce)` fallbacks
+-  Set correct `transform-origin` based on trigger position
+
+## Adaptive Design Standards (from adaptive-design skill)
+
+-  Test with empty state, minimal content, maximum content
+-  Handle missing images with fallbacks
+-  Use fluid layouts: `clamp()`, `minmax()`, container queries
+-  Define constraints/relationships, not fixed pixels
+-  Test at all breakpoints (320px - 2560px)
+-  Handle text overflow gracefully (truncation, ellipsis)
+-  Design loading states, error states, empty states
 
 ## Component Types to Consider
 

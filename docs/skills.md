@@ -62,18 +62,22 @@ Skills are **systematic workflows** that auto-activate based on task type. They 
 ## Skill Categories
 
 ```
-┌────────────────────────────────────────────────────────────────────┐
-│                          SKILLS                                     │
-├────────────────┬────────────────┬────────────────┬─────────────────┤
-│   MANDATORY    │   PLANNING     │   EXECUTION    │    QUALITY      │
-│  (Auto-On)     │                │                │                 │
-├────────────────┼────────────────┼────────────────┼─────────────────┤
-│ • TDD          │ • task-analysis│ • executing-   │ • code-review   │
-│ • debugging    │ • feature-     │   plans        │ • api-testing   │
-│ • brainstorming│   planning     │ • ralph-mode   │ • frontend-     │
-│ • git          │ • writing-plans│                │   design        │
-│                │ • prd-builder  │                │ • compound-eng  │
-└────────────────┴────────────────┴────────────────┴─────────────────┘
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                               SKILLS                                         │
+├─────────────────┬────────────────┬────────────────┬────────────────────────┤
+│   MANDATORY     │   PLANNING     │   EXECUTION    │    QUALITY/DESIGN      │
+│   (Auto-On)     │                │                │                        │
+├─────────────────┼────────────────┼────────────────┼────────────────────────┤
+│ • TDD           │ • task-analysis│ • executing-   │ • code-review          │
+│ • debugging     │ • feature-     │   plans        │ • api-testing          │
+│ • brainstorming │   planning     │ • ralph-mode   │ • frontend-design      │
+│ • git           │ • writing-plans│                │ • adaptive-design (*)  │
+│ • adaptive-     │ • prd-builder  │                │ • ui-animation (*)     │
+│   design (*)    │                │                │ • compound-eng         │
+│ • ui-animation  │                │                │ • web-design-guidelines│
+│   (*)           │                │                │ • react-best-practices │
+└─────────────────┴────────────────┴────────────────┴────────────────────────┘
+                     (*) MANDATORY for any visual work
 ```
 
 ---
@@ -297,7 +301,57 @@ These activate **automatically** - no trigger needed:
 - Accessibility built-in
 
 **Integration:**
-- Pairs with: `frontend-architect`, `accessibility-specialist`
+- Pairs with: `adaptive-design`, `ui-animation`, `frontend-architect`, `accessibility-specialist`
+
+---
+
+### adaptive-design (MANDATORY for visual)
+
+**Activates:** Any visual component, page, or UI element
+
+**Process:**
+1. Design with real data (not idealized mocks)
+2. Test edge cases: empty, minimal, maximum content
+3. Use constraint-based layouts, not fixed pixels
+4. Handle missing images, long text, overflow
+5. Responsive across 320px - 2560px viewports
+
+**Key Principles:**
+- Data informs and constrains design
+- Edge cases surface during design, not development
+- Use `clamp()`, `minmax()`, container queries
+- Test with real names, real images, real text
+
+**Integration:**
+- Called by: `frontend-design`, `component-new`, `page-new`
+- Pairs with: `ui-animation`, `web-design-guidelines`, `frontend-architect`
+
+---
+
+### ui-animation (MANDATORY for visual)
+
+**Activates:** Any visual component, page, or UI element
+
+**Process:**
+1. Apply precise timing (all UI < 300ms except drawers)
+2. Use correct easing (90% ease-out)
+3. Animate only transform + opacity
+4. Set correct transform-origin
+5. Respect `prefers-reduced-motion`
+
+**Quick Reference:**
+```
+Button press:     scale(0.97), 150ms, ease-out
+Tooltip:          scale(0.97), 125ms, ease-out
+Modal:            scale(0.93), 200ms, ease-out
+Dropdown:         scale(0.93), 180ms, ease-out
+Drawer (iOS):     500ms, cubic-bezier(0.32, 0.72, 0, 1)
+Toast dismiss:    4 seconds (pause when inactive)
+```
+
+**Integration:**
+- Called by: `frontend-design`, `component-new`, `page-new`
+- Pairs with: `adaptive-design`, `web-design-guidelines`, `react-best-practices`
 
 ---
 

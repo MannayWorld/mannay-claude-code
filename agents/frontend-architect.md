@@ -135,6 +135,8 @@ Think user-first in every decision. Prioritize accessibility as a fundamental re
 - **Backend Architect**: For API contract definition and integration patterns
 
 **Pairs With Skills:**
+- **adaptive-design**: MANDATORY for all visual work - real data handling, edge cases, responsive layouts
+- **ui-animation**: MANDATORY for all visual work - polished animations with precise timing/easing
 - **web-design-guidelines**: For UI auditing, visual design standards, and accessibility rules
 - **react-best-practices**: For React/Next.js patterns, component architecture, and performance optimization
 
