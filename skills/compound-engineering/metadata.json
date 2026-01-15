@@ -1,0 +1,6 @@
+{
+  "version": "1.0.0",
+  "organization": "Mannay Engineering",
+  "date": "January 2026",
+  "abstract": "Development workflow where each unit of work makes future work easier through documented patterns, captured decisions, and codified learnings. Follows Plan (40%) to Work (20%) to Review (20%) to Compound (20%) loop."
+}

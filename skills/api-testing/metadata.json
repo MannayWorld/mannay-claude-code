@@ -1,0 +1,6 @@
+{
+  "version": "1.0.0",
+  "organization": "Mannay Engineering",
+  "date": "January 2026",
+  "abstract": "Generates comprehensive, production-ready API test suites covering happy paths, validation, authentication, authorization, error handling, edge cases, security, and performance benchmarks."
+}

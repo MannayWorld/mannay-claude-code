@@ -2,6 +2,7 @@
 name: prd-builder
 description: "Generate a Product Requirements Document (PRD) for Ralph autonomous execution. Use when planning a feature or project. Triggers on: 'create a prd', 'write prd', 'plan this feature', 'requirements for', 'spec out', 'user stories for', 'break down this feature'."
 impact: MEDIUM
+context: fork
 category: planning
 triggers:
   - "create a prd"

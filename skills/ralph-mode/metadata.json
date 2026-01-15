@@ -1,0 +1,6 @@
+{
+  "version": "1.0.0",
+  "organization": "Mannay Engineering",
+  "date": "January 2026",
+  "abstract": "Autonomous loop execution that works independently completing PRD user stories one at a time with commits. Enables hours or days of unattended work through a 7-phase workflow with memory persistence via git commits and progress files."
+}

@@ -1,0 +1,6 @@
+{
+  "version": "1.0.0",
+  "organization": "Mannay Engineering",
+  "date": "January 2026",
+  "abstract": "Enforces the RED-GREEN-REFACTOR cycle for all code changes. Write failing test first, implement minimal code to pass, then refactor. No production code without a failing test first."
+}

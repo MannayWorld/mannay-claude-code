@@ -1,0 +1,63 @@
+name: Validate Skills
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'skills/**'
+  pull_request:
+    branches: [main]
+    paths:
+      - 'skills/**'
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 8
+
+      - name: Validate skill structure
+        run: |
+          echo "Validating skill directories..."
+          for dir in skills/*/; do
+            if [ -f "${dir}SKILL.md" ]; then
+              echo "✓ ${dir} has SKILL.md"
+              # Check for required frontmatter
+              if grep -q "^name:" "${dir}SKILL.md" && grep -q "^description:" "${dir}SKILL.md"; then
+                echo "  ✓ Has required frontmatter"
+              else
+                echo "  ✗ Missing required frontmatter (name, description)"
+                exit 1
+              fi
+            else
+              echo "✗ ${dir} missing SKILL.md"
+              exit 1
+            fi
+          done
+          echo "All skills validated!"
+
+      - name: Build react-best-practices (if changed)
+        if: contains(github.event.head_commit.modified, 'skills/react-best-practices/')
+        working-directory: skills/react-best-practices
+        run: |
+          pnpm install
+          pnpm validate
+          pnpm build
+
+      - name: Check for uncommitted changes
+        run: |
+          if [ -n "$(git status --porcelain)" ]; then
+            echo "Warning: Build generated uncommitted changes"
+            git status
+          fi

@@ -1,0 +1,6 @@
+{
+  "version": "1.0.0",
+  "organization": "Mannay Engineering",
+  "date": "January 2026",
+  "abstract": "Master orchestrator for all Mannay skills, agents, and commands. Contains keyword-to-tool mapping for smart auto-detection and defines mandatory behaviors like TDD for implementation and systematic debugging for bugs."
+}

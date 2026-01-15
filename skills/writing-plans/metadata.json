@@ -1,0 +1,6 @@
+{
+  "version": "1.0.0",
+  "organization": "Mannay Engineering",
+  "date": "January 2026",
+  "abstract": "Creates comprehensive implementation plans with bite-sized tasks assuming the engineer has zero codebase context. Each step takes 2-5 minutes and includes exact file paths, complete code, and verification commands."
+}

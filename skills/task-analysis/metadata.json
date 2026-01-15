@@ -1,0 +1,6 @@
+{
+  "version": "1.0.0",
+  "organization": "Mannay Engineering",
+  "date": "January 2026",
+  "abstract": "Analyzes task complexity and creates actionable implementation plans. Detects project framework, estimates time, identifies risks, and breaks down tasks into TDD-based execution phases."
+}

@@ -1,0 +1,6 @@
+{
+  "version": "1.0.0",
+  "organization": "Mannay Engineering",
+  "date": "January 2026",
+  "abstract": "Batch execution skill that loads implementation plans and executes tasks in batches with review checkpoints. Supports crash recovery through progress tracking files."
+}

@@ -1,0 +1,6 @@
+{
+  "version": "1.0.0",
+  "organization": "Mannay Engineering",
+  "date": "January 2026",
+  "abstract": "Standard git workflows following conventional commits and best practices. Covers commits, branches, PRs, merging, rebasing, stashing, and safety rules for version control operations."
+}

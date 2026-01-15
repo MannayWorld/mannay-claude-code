@@ -10,6 +10,7 @@ triggers:
   - "re-render"
   - "optimization"
 impact: CRITICAL
+context: fork
 ---
 
 # React Best Practices

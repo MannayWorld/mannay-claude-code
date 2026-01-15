@@ -2,6 +2,7 @@
 name: using-mannay
 description: "Master orchestrator for all Mannay skills, agents, and commands. Automatically loaded to help Claude select the right tools. Contains keyword-to-tool mapping for smart auto-detection even with short prompts."
 impact: HIGH
+context: fork
 triggers:
   - "what tools are available"
   - "how do I use"

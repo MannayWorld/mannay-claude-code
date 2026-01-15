@@ -1,0 +1,6 @@
+{
+  "version": "1.0.0",
+  "organization": "Mannay Engineering",
+  "date": "January 2026",
+  "abstract": "Subagent-driven development skill that dispatches fresh subagents per task with two-stage review after each: spec compliance verification followed by code quality analysis."
+}
