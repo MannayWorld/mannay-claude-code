@@ -362,6 +362,21 @@ element.style.setProperty('--drag-y', `${y}px`);
 element.style.transform = `translateY(${y}px)`;
 ```
 
+### Blur Trick (Debugging)
+
+When animation feels off despite tweaking easing/duration, add **2px blur** during the transition:
+
+```css
+.element {
+  transition: transform 200ms ease-out, filter 200ms ease-out;
+}
+.element[data-transitioning] {
+  filter: blur(2px);
+}
+```
+
+Blur masks the visual gap between states, tricking the eye into seeing smoother motion.
+
 ---
 
 ## Accessibility
@@ -414,7 +429,8 @@ Tooltip:           scale(0.97), 125ms, ease-out
 Modal:             scale(0.93), 200ms, ease-out
 Dropdown:          scale(0.93), 180ms, ease-out, origin from trigger
 Drawer (iOS):      500ms, cubic-bezier(0.32, 0.72, 0, 1)
-Toast:             4s dismiss, pause when inactive
+Toast:             4s dismiss, pause when inactive/hover
+Toast stacking:    scale(1 - 0.05 × index), translateY(-14px × index)
 
 Enter:             opacity + translateY(8) + blur(4px)
 Exit:              SUBTLER than enter (translateY -8px)
@@ -425,6 +441,7 @@ Never animate:     width, height, padding, margin, top/left
 
 Interruptibility:  Use transitions (not keyframes)
 Dismissal:         Use velocity threshold (0.11), not distance
+Blur trick:        Add 2px blur during transition if animation feels off
 
 Accessibility:     prefers-reduced-motion is MANDATORY
 ```
