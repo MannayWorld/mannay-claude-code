@@ -5,6 +5,46 @@ All notable changes to mannay-claude-code plugin will be documented in this file
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.8.0] - 2026-01-16
+
+### Added
+
+**New Skills - Visual Design Excellence**
+- `adaptive-design` - Design with real data and adaptive layouts (MANDATORY for visual):
+  - Frequency rule: design for real data, not idealized mocks
+  - Edge case testing: empty, minimal, maximum content
+  - Constraint-based layouts instead of fixed pixels
+  - Testing guide reference with data sets and stress tests
+
+- `ui-animation` - Enhanced with philosophy and advanced patterns (MANDATORY for visual):
+  - Philosophy section: "Should this animate?" frequency-based decisions
+  - Enter/exit asymmetry: exits subtler than enters
+  - Blur materializing effect: opacity + translateY + blur recipe
+  - Spring configuration: bounce: 0 for professional
+  - Interruptibility: transitions over keyframes
+  - Velocity-based dismissal (0.11 threshold)
+  - 4 reference files: component-patterns, advanced-techniques, common-mistakes, audit-checklist
+
+**Advanced Animation Techniques**
+- `@property` for animating CSS variables
+- `linear()` function for pure CSS springs
+- `layoutId`/FLIP technique for smooth transitions
+- Scroll-driven animation patterns
+
+### Changed
+
+**Skill Integration**
+- `using-mannay` orchestrator now triggers adaptive-design + ui-animation for ALL visual work
+- `frontend-design` lists adaptive-design and ui-animation as MANDATORY companions
+- Updated commands: `/component-new`, `/page-new`, `/page-new-react` reference both skills
+- Updated agents: `frontend-architect`, `accessibility-specialist` pair with both skills
+
+**Documentation**
+- `docs/skills.md` - Added detailed entries for adaptive-design and ui-animation
+- `CLAUDE.md` - Added adaptive-design and ui-animation to key skills table
+
+---
+
 ## [1.7.0] - 2026-01-15
 
 ### Added

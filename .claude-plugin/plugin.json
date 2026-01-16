@@ -1,7 +1,7 @@
 {
   "name": "mannay-claude-code",
-  "version": "1.7.0",
-  "description": "Professional Claude Code plugin with 20+ commands, 15 AI agents, 15 skills, Ralph Mode, Memory System, and Codex GPT Reviews",
+  "version": "1.8.0",
+  "description": "Professional Claude Code plugin with 20+ commands, 15 AI agents, 17 skills, Ralph Mode, Memory System, and Codex GPT Reviews",
   "author": {
     "name": "Mannay"
   },
